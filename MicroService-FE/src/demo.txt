@@ -1,3 +1,152 @@
+// OrganizationInfo.jsx
+import React, { useState } from "react";
+import { Box, useTheme, Tabs, Tab } from "@mui/material";
+import Header from "../../components/Header";
+import { tokens } from "../../theme";
+import OrganizationStructure from "./OrganizationStructure";
+import Department from "./Department";
+import Address from "./Address";
+import StaffPlan from "./StaffPlan";
+import StructureChange from "./StructureChange";
+
+function CustomTabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    </div>
+  );
+}
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
+const OrganizationInfo = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
+  const pages = [
+    "Organization Structure",
+    "Department/Process",
+    "Address",
+    "Staff Plan",
+    "Structure Change",
+  ];
+
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  return (
+    <Box m="20px">
+      <Header title="Organization Information" subtitle="" />
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+        >
+          Tab label="Tab 1" />
+          <Tab label="Tab 2" />
+          <Tab label="Tab 3" />
+          }
+        </Tabs>
+      </Box>
+      <CustomTabPanel value={value} index={0}>
+        <OrganizationStructure />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={1}>
+        <Department />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={2}>
+        <Address />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={3}>
+        <StaffPlan />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={4}>
+        <StructureChange />
+      </CustomTabPanel>
+    </Box>
+  );
+};
+
+export default OrganizationInfo;
+
+
+import React, { useState } from "react";
+import AppBar from "@mui/material/AppBar";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box p={3}>{children}</Box>}
+    </div>
+  );
+}
+
+export default function SimpleTabs() {
+  const [store, setStore] = useState({ test1: "", test2: "", test3: "", test4: "", test5: "" });
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const onSubmit = (data) => {
+    setStore({
+      ...store,
+      ...data
+    });
+  };
+
+  console.log(store);
+
+  return (
+    <div>
+      <AppBar position="static">
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="simple tabs example"
+        >
+          <Tab label="Organization Structure" />
+          <Tab label="Department/Process" />
+          <Tab label="Address" />
+          <Tab label="Staff Plan" />
+          <Tab label="Structure Change" />
+        </Tabs>
+      </AppBar>
+    </div>
+  );
+}
+
+
 import { useState } from "react";
 import { Box, useTheme, Typography, Tabs, Tab } from "@mui/material";
 import Header from "../../components/Header";
@@ -92,3 +241,6 @@ const OrganizationInfo = () => {
 };
 
 export default OrganizationInfo;
+
+
+

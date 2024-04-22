@@ -10,7 +10,6 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import SettingsPage from "./SettingsPage";
 import NotificationPage from "./NotificationPage";
-import LoginPage from "./LoginPage";
 
 const Topbar = () => {
   const theme = useTheme();
@@ -26,10 +25,6 @@ const Topbar = () => {
 
   const handleNotificationsClick = () => {
     setNotificationOpen(!notificationOpen);
-  };
-
-  const handleUserClick = () => {
-    setLoginOpen(!loginOpen);
   };
 
   return (
@@ -62,9 +57,9 @@ const Topbar = () => {
         <IconButton onClick={handleSettingsClick}>
           <SettingsOutlinedIcon />
         </IconButton>
-        <IconButton onClick={handleUserClick}>
+        {/* <IconButton onClick={handleUserClick}>
           <PersonOutlinedIcon />
-        </IconButton>
+        </IconButton> */}
       </Box>
 
       {/* SETTINGS PAGE */}
@@ -72,9 +67,6 @@ const Topbar = () => {
 
       {/* NOTIFICATION PAGE */}
       {notificationOpen && <NotificationPage />}
-
-      {/* LOGIN PAGE */}
-      {loginOpen && <LoginPage />}
     </Box>
   );
 };

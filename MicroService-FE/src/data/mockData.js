@@ -8,6 +8,7 @@ export const mockDataTeam = [
     age: 35,
     phone: "(665)121-5454",
     access: "admin",
+    role: "admin1",
   },
   {
     id: 2,
@@ -16,6 +17,7 @@ export const mockDataTeam = [
     age: 42,
     phone: "(421)314-2288",
     access: "manager",
+    role: "admin2",
   },
   {
     id: 3,
