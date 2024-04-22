@@ -16,6 +16,9 @@ import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutl
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import WorkHistoryOutlinedIcon from "@mui/icons-material/WorkHistoryOutlined";
+import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
+import CorporateFareOutlinedIcon from "@mui/icons-material/CorporateFareOutlined";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -182,7 +185,34 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+              Organization
+            </Typography>
+            <Item
+              title="Manage Organizations"
+              to="/organization"
+              icon={<CorporateFareOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Job"
+              to="/job"
+              icon={<WorkHistoryOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Pay Grade"
+              to="/pay"
+              icon={<PaymentsOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
             <Typography
               variant="h6"
               color={colors.grey[300]}

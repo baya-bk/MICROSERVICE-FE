@@ -16,6 +16,9 @@ import FAQ from "./scenes/faq";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
+import OrganizationInfo from "./scenes/organization";
+import Pay from "./scenes/pay";
+import Job from "./scenes/job";
 // import { MockDataProvider } from "../src/scenes/MockDataContext";
 
 function App() {
@@ -41,6 +44,9 @@ function App() {
               <Route path="/bar" element={<Bar />} />
               <Route path="/pie" element={<Pie />} />
               <Route path="/faq" element={<FAQ />} />
+              <Route path="/organization" element={<OrganizationInfo />} />
+              <Route path="/job" element={<Job />} />
+              <Route path="/pay" element={<Pay />} />
               <Route path="/calendar" element={<Calendar />} />
             </Routes>
           </main>
