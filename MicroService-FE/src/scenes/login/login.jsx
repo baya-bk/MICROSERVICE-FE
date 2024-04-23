@@ -27,7 +27,7 @@ function Login() {
       } else if (user.role === "admin2") {
         localStorage.setItem("userToken", user.email);
         localStorage.setItem("role", user.role);
-        navigate("/dashboard/organization-information", { replace: true });
+        navigate("/dashboard/organization", { replace: true });
       }
       // Login successful
       // localStorage.setItem('userToken', user.email);
