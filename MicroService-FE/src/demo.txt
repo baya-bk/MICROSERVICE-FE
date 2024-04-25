@@ -1,246 +1,107 @@
-// OrganizationInfo.jsx
-import React, { useState } from "react";
-import { Box, useTheme, Tabs, Tab } from "@mui/material";
-import Header from "../../components/Header";
-import { tokens } from "../../theme";
-import OrganizationStructure from "./OrganizationStructure";
-import Department from "./Department";
-import Address from "./Address";
-import StaffPlan from "./StaffPlan";
-import StructureChange from "./StructureChange";
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import C from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-function CustomTabPanel(props) {
-  const { children, value, index, ...other } = props;
-
+function Copyright(props) {
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="https://mui.com/">
+        Your Website
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
   );
 }
 
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
+// TODO remove, this demo shouldn't need to reset the theme.
 
-const OrganizationInfo = () => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+const defaultTheme = createTheme();
 
-  const pages = [
-    "Organization Structure",
-    "Department/Process",
-    "Address",
-    "Staff Plan",
-    "Structure Change",
-  ];
-
-  const [value, setValue] = useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  return (
-    <Box m="20px">
-      <Header title="Organization Information" subtitle="" />
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          Tab label="Tab 1" />
-          <Tab label="Tab 2" />
-          <Tab label="Tab 3" />
-          }
-        </Tabs>
-      </Box>
-      <CustomTabPanel value={value} index={0}>
-        <OrganizationStructure />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        <Department />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        <Address />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={3}>
-        <StaffPlan />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={4}>
-        <StructureChange />
-      </CustomTabPanel>
-    </Box>
-  );
-};
-
-export default OrganizationInfo;
-
-
-import React, { useState } from "react";
-import AppBar from "@mui/material/AppBar";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Box from "@mui/material/Box";
-
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box p={3}>{children}</Box>}
-    </div>
-  );
-}
-
-export default function SimpleTabs() {
-  const [store, setStore] = useState({ test1: "", test2: "", test3: "", test4: "", test5: "" });
-  const [value, setValue] = useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const onSubmit = (data) => {
-    setStore({
-      ...store,
-      ...data
+export default function SignIn() {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get('email'),
+      password: data.get('password'),
     });
   };
 
-  console.log(store);
-
   return (
-    <div>
-      <AppBar position="static">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="simple tabs example"
+    <ThemeProvider theme={defaultTheme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
         >
-          <Tab label="Organization Structure" />
-          <Tab label="Department/Process" />
-          <Tab label="Address" />
-          <Tab label="Staff Plan" />
-          <Tab label="Structure Change" />
-        </Tabs>
-      </AppBar>
-    </div>
-  );
-}
-
-
-import { useState } from "react";
-import { Box, useTheme, Typography, Tabs, Tab } from "@mui/material";
-import Header from "../../components/Header";
-import { tokens } from "../../theme";
-import OrganizationStructure from "./OrganizationStructure";
-import Department from "./Department";
-import Address from "./Address";
-import StaffPlan from "./StaffPlan";
-import StructureChange from "./StructureChange";
-
-function CustomTabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
-  );
-}
-
-function CustomTab({ title, index, selected, setSelected }) {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-
-  const handleClick = () => {
-    setSelected(index);
-  };
-
-  return <Tab label={<Typography>{title}</Typography>} onClick={handleClick} />;
-}
-
-const OrganizationInfo = () => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-
-  const pages = [
-    "Organization Structure",
-    "Department/Process",
-    "Address",
-    "Staff Plan",
-    "Structure Change",
-  ];
-
-  const [value, setValue] = useState(0);
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  return (
-    <Box m="20px">
-      <Header title="Organization Information" subtitle="" />
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          {pages.map((page, index) => (
-            <CustomTab
-              key={index}
-              title={page}
-              index={index}
-              selected={value}
-              setSelected={setValue}
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              value={username}
+            onChange={(e) => setUsername(e.target.value)}
+              label="Username"
+              name="username"
+              autoComplete="username"
+              autoFocus
             />
-          ))}
-        </Tabs>
-      </Box>
-      <CustomTabPanel value={value} index={0}>
-        <OrganizationStructure />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        <Department />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        <Address />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={3}>
-        <StaffPlan />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={4}>
-        <StructureChange />
-      </CustomTabPanel>
-    </Box>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign In
+            </Button>
+            
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
   );
-};
-
-export default OrganizationInfo;
-
-
-
+}
+<Button type="submit" color="secondary" variant="contained">
+                Add Item
+              </Button>
