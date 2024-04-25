@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Typography, Box, useTheme, Container, Checkbox } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Typography, Box, Container, Checkbox } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
