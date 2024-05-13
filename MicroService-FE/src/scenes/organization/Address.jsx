@@ -1,211 +1,200 @@
-import { Box, Button, TextField, IconButton } from "@mui/material";
-import { Formik } from "formik";
-import * as yup from "yup";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import AddIcon from "@mui/icons-material/Add";
-const Address = () => {
-  const isNonMobile = useMediaQuery("(min-width:600px)");
+import {
+  Box,
+  Paper,
+  TextField,
+  Grid,
+  Typography,
+  Select,
+  Stack,
+  Button,
+  Tooltip,
+  Container,
+} from "@mui/material";
+import dayjs from "dayjs";
+import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
+const Address = () => {
   const handleFormSubmit = (values) => {
     console.log(values);
   };
 
   return (
-    <Box m="20px">
-      {/* <Header title="CREATE USER" subtitle="Create a New User Profile" /> */}
-      <Formik
-        onSubmit={handleFormSubmit}
-        initialValues={initialValues}
-        validationSchema={checkoutSchema}
-      >
-        {({
-          values,
-          errors,
-          touched,
-          handleBlur,
-          handleChange,
-          handleSubmit,
-        }) => (
-          <form onSubmit={handleSubmit}>
-            <Box
-              display="grid"
-              gap="10px"
-              gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-              sx={{
-                "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-              }}
-            >
+    <Box
+      sx={{
+        padding: "20px",
+        display: "flex",
+        flexDirection: "column",
+        gap: "20px",
+      }}
+    >
+      <Paper sx={{ padding: "20px" }} elevation={2}>
+        <Stack direction="row">
+          <Grid container spacing={4} alignItems="center">
+            <Grid item xs={12} md={2}>
+              <Typography>Address:*</Typography>
+            </Grid>
+            <Grid item xs={12} md={10}>
               <TextField
-                required
+                id="outlined-size-small"
+                defaultValue=""
                 size="small"
-                variant="filled"
-                type="text"
-                label="Address"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address}
-                name="address"
-                error={!!touched.address && !!errors.address}
-                helperText={touched.address && errors.address}
-                sx={{ marginLeft: "10px", gridColumn: "span 1" }}
+                sx={{ width: 200, height: 25 }}
               />
-              <IconButton aria-label="add">
-                <AddIcon />
-              </IconButton>
+              <Tooltip
+                color="success"
+                describeChild
+                title="Does not add if it already exists."
+              >
+                <Button>Add</Button>
+              </Tooltip>
+            </Grid>
+            <Grid item xs={12} md={2}>
+              <Typography>Block No:</Typography>
+            </Grid>
+            <Grid item xs={12} md={10}>
+              <TextField
+                id="outlined-size-small"
+                defaultValue=""
+                size="small"
+                sx={{ width: 250, height: 25 }}
+              />
+            </Grid>
+            <Grid item xs={12} md={2}>
+              <Typography>Tel.Office:*</Typography>
+            </Grid>
+            <Grid item xs={12} md={10}>
+              <TextField
+                id="outlined-size-small"
+                defaultValue=""
+                size="small"
+                sx={{ width: 250, height: 25 }}
+              />
+            </Grid>
+            <Grid item xs={12} md={2}>
+              <Typography>Tel.Extension:*</Typography>
+            </Grid>
+            <Grid item xs={12} md={10}>
+              <TextField
+                id="outlined-size-small"
+                defaultValue=""
+                size="small"
+                sx={{ width: 250, height: 25 }}
+              />
+            </Grid>
+            <Grid item xs={12} md={2}>
+              <Typography>Mobile:</Typography>
+            </Grid>
+            <Grid item xs={12} md={10}>
+              <TextField
+                id="outlined-size-small"
+                defaultValue=""
+                size="small"
+                sx={{ width: 250, height: 25 }}
+              />
+            </Grid>
+          </Grid>
 
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={12} md={2}>
+              <Typography>House Number:</Typography>
+            </Grid>
+            <Grid item xs={12} md={10}>
               <TextField
+                id="outlined-size-small"
+                defaultValue=""
                 size="small"
-                variant="filled"
-                type="text"
-                label="House Number"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.houseNumber}
-                name="houseNumber"
-                error={!!touched.houseNumber && !!errors.houseNumber}
-                helperText={touched.houseNumber && errors.houseNumber}
-                sx={{ gridColumn: "span 2" }}
+                sx={{ width: 250, height: 25 }}
               />
+            </Grid>
+            <Grid item xs={12} md={2}>
+              <Typography>Floor:</Typography>
+            </Grid>
+            <Grid item xs={12} md={10}>
               <TextField
+                id="outlined-size-small"
+                defaultValue=""
                 size="small"
-                variant="filled"
-                type="text"
-                label="Block Number"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.blockNumber}
-                name="blockNumber"
-                error={!!touched.blockNumber && !!errors.blockNumber}
-                helperText={touched.blockNumber && errors.blockNumber}
-                sx={{ gridColumn: "span 2" }}
+                sx={{ width: 250, height: 25 }}
               />
+            </Grid>
+            <Grid item xs={12} md={2}>
+              <Typography>Office Number:</Typography>
+            </Grid>
+            <Grid item xs={12} md={10}>
               <TextField
+                id="outlined-size-small"
+                defaultValue=""
                 size="small"
-                variant="filled"
-                type="text"
-                label="Floor"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.floor}
-                name="floor"
-                error={!!touched.floor && !!errors.floor}
-                helperText={touched.floor && errors.floor}
-                sx={{ gridColumn: "span 2" }}
+                sx={{ width: 250, height: 25 }}
               />
+            </Grid>
+            <Grid item xs={12} md={2}>
+              <Typography>Email:</Typography>
+            </Grid>
+            <Grid item xs={12} md={10}>
               <TextField
-                required
+                id="outlined-size-small"
+                defaultValue="info@eep.gov.et"
                 size="small"
-                variant="filled"
-                type="text"
-                label=" Tel. Office"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.telOfficce}
-                name="telOfficce"
-                error={!!touched.telOfficce && !!errors.telOfficce}
-                helperText={touched.telOfficce && errors.telOfficce}
-                sx={{ gridColumn: "span 2" }}
+                sx={{ width: 250, height: 25 }}
               />
+            </Grid>
+            <Grid item xs={12} md={2}>
+              <Typography>Website:</Typography>
+            </Grid>
+            <Grid item xs={12} md={10}>
               <TextField
+                id="outlined-size-small"
+                defaultValue="http://www.eep.gov.et"
                 size="small"
-                variant="filled"
-                type="text"
-                label="Office Number"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.officeNumber}
-                name="mobile"
-                error={!!touched.officeNumber && !!errors.officeNumber}
-                helperText={touched.officeNumber && errors.officeNumber}
-                sx={{ gridColumn: "span 2" }}
+                sx={{ width: 250, height: 25 }}
               />
-              <TextField
-                size="small"
-                variant="filled"
-                type="text"
-                label="Tel. Extension"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.telExtention}
-                name="mobile"
-                error={!!touched.telExtention && !!errors.telExtention}
-                helperText={touched.telExtention && errors.telExtention}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                size="small"
-                variant="filled"
-                type="text"
-                label="Email"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.email}
-                name="email"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                size="small"
-                variant="filled"
-                type="text"
-                label="Mobile"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.mobile}
-                name="mobile"
-                error={!!touched.mobile && !!errors.mobile}
-                helperText={touched.mobile && errors.mobile}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                size="small"
-                variant="filled"
-                type="text"
-                label="Website"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.website}
-                name="website"
-                error={!!touched.website && !!errors.website}
-                helperText={touched.website && errors.website}
-                sx={{ gridColumn: "span 2" }}
-              />
-            </Box>
-            <Box display="flex" justifyContent="end" mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
-                Save
-              </Button>
-            </Box>
-          </form>
-        )}
-      </Formik>
+            </Grid>
+          </Grid>
+        </Stack>
+      </Paper>
+      <Paper sx={{ padding: "10px" }} elevation={2}>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={12} md={2}>
+            <Typography>Prepared by:</Typography>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <TextField
+              id="outlined-size-small"
+              defaultValue=""
+              size="small"
+              sx={{ width: 250, height: 25 }}
+            />
+          </Grid>
+          <Grid item xs={12} md={2}>
+            <Typography>Prepared by:</Typography>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer components={["DatePicker"]}>
+                <DemoItem>
+                  <DatePicker
+                    sx={{ width: 250, height: 60 }}
+                    defaultValue={dayjs("2022-04-17")}
+                  />
+                </DemoItem>
+              </DemoContainer>
+            </LocalizationProvider>
+          </Grid>
+        </Grid>
+      </Paper>
+      <Paper sx={{ padding: "20px" }} elevation={2}>
+        <Stack direction="row" spacing={2} alignItems="center">
+          <Button color="success" variant="contained">
+            Save
+          </Button>
+        </Stack>
+      </Paper>
     </Box>
   );
-};
-
-const phoneRegExp =
-  /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-
-const checkoutSchema = yup.object().shape({
-  address: yup.string().required("required"),
-  telOfficce: yup.string().required("required"),
-  email: yup.string().email("invalid email").required("required"),
-  mobile: yup
-    .string()
-    .matches(phoneRegExp, "Phone number is not valid")
-    .required("required"),
-});
-const initialValues = {
-  address: "",
-  houseNumber: "",
-  blockNumber: "",
-  floor: "",
-  telOfficce: "",
-  officeNumber: "",
-  telExtention: "",
-  email: "",
-  mobile: "",
 };
 
 export default Address;
