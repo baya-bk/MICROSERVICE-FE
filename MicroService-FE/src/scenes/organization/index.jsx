@@ -60,6 +60,11 @@ const OrganizationInfo = () => {
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
+          TabIndicatorProps={{
+            style: {
+              backgroundColor: "#D97D54",
+            },
+          }}
         >
           {pages.map((page, index) => (
             <CustomTab

@@ -1,5 +1,8 @@
-import { editItem, deleteItem, addItem } from "./services/api";
+import { editItem, deleteItem, addItem, fetchItems } from "./services/api";
 import axios from "axios";
+import HttpClient from "./middleware/HttpClient.js";
+
+const api = HttpClient();
 
 export const FETCH_ITEMS_SUCCESS = "FETCH_ITEMS_SUCCESS";
 export const FETCH_ITEMS_FAILURE = "FETCH_ITEMS_FAILURE";
@@ -15,10 +18,14 @@ export const fetchItemsFailure = (error) => ({
 });
 
 export const fetchItemsAction = () => {
+  const tenant_id = 53;
   return async (dispatch) => {
     try {
-      const response = await axios.get("http://localhost:3000/items");
-      dispatch(fetchItemsSuccess(response.data));
+      // const response = await api.get(`/53/getAllAddress`);
+      const response = await fetchItems(tenant_id);
+
+      console.log("response is :: ", response);
+      dispatch(fetchItemsSuccess(response));
     } catch (error) {
       dispatch(fetchItemsFailure(error.message));
     }

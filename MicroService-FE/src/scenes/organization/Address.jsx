@@ -1,25 +1,97 @@
+import * as React from "react";
 import {
   Box,
   Paper,
   TextField,
   Grid,
   Typography,
-  Select,
   Stack,
   Button,
-  Tooltip,
-  Container,
+  useTheme,
 } from "@mui/material";
+import { tokens } from "../../theme";
+import CircularProgress from "@mui/material/CircularProgress";
+import { green } from "@mui/material/colors";
+import CheckIcon from "@mui/icons-material/Check";
+import SaveIcon from "@mui/icons-material/Save";
 import dayjs from "dayjs";
 import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { useState } from "react";
+import HttpClient from "../../middleware/HttpClient.js";
+import { useDispatch } from "react-redux";
+import { addAddressThunks } from "../../store.js";
+import Fab from "@mui/material/Fab";
+import AddIcon from "@mui/icons-material/Add";
 
 const Address = () => {
-  const handleFormSubmit = (values) => {
-    console.log(values);
+  const api = HttpClient();
+  const initialValues = {
+    department_id: 52,
+    address: "",
+    block_number: "",
+    tel_office: "",
+    tel_extension: "",
+    mobile: "",
+    house_number: "",
+    floor: "",
+    office_number: "",
+    email: "",
+    website: "",
+    tenant_id: 53,
   };
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState(initialValues);
+  // const formData = useSelector((state)) => state.;
+  const handleChange = (e) => {
+    e.preventDefault();
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async () => {
+    try {
+      setSuccess(false);
+      setLoading(true);
+
+      await dispatch(
+        addAddressThunks.addItem(formData.tenant_id, formData)
+      ).then((res) => {
+        setSuccess(true);
+        console.log(res);
+      });
+      // .unwrap();
+    } catch (error) {
+      console.error("Failed to submit the data:", error);
+      setSuccess(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const [loading, setLoading] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+  const timer = React.useRef();
+
+  const buttonSx = {
+    ...(success && {
+      bgcolor: green[500],
+      "&:hover": {
+        bgcolor: green[700],
+      },
+    }),
+  };
+
+  React.useEffect(() => {
+    return () => {
+      clearTimeout(timer.current);
+    };
+  }, []);
 
   return (
     <Box
@@ -30,67 +102,91 @@ const Address = () => {
         gap: "20px",
       }}
     >
-      <Paper sx={{ padding: "20px" }} elevation={2}>
+      <Box
+        backgroundColor={colors.primary[400]}
+        sx={{ padding: "20px", boxShadow: 2 }}
+      >
         <Stack direction="row">
-          <Grid container spacing={4} alignItems="center">
+          <Grid container spacing={3} alignItems="center">
             <Grid item xs={12} md={2}>
-              <Typography>Address:*</Typography>
+              Address:*
             </Grid>
             <Grid item xs={12} md={10}>
               <TextField
+                value={formData.address}
+                name="address"
+                onChange={handleChange}
                 id="outlined-size-small"
-                defaultValue=""
+                // defaultValue=""
                 size="small"
                 sx={{ width: 200, height: 25 }}
               />
-              <Tooltip
-                color="success"
-                describeChild
-                title="Does not add if it already exists."
+              <Fab
+                sx={{
+                  backgroundColor: colors.blueAccent[700],
+                  color: colors.grey[100],
+                  marginLeft: 1,
+                  width: 35,
+                  height: 3,
+                }}
+                size="small"
+                aria-label="add"
               >
-                <Button>Add</Button>
-              </Tooltip>
+                <AddIcon />
+              </Fab>
             </Grid>
             <Grid item xs={12} md={2}>
-              <Typography>Block No:</Typography>
+              Block No:
             </Grid>
             <Grid item xs={12} md={10}>
               <TextField
+                name="block_number"
+                value={formData.block_number}
+                onChange={handleChange}
                 id="outlined-size-small"
-                defaultValue=""
+                // defaultValue=""
                 size="small"
                 sx={{ width: 250, height: 25 }}
               />
             </Grid>
             <Grid item xs={12} md={2}>
-              <Typography>Tel.Office:*</Typography>
+              Tel.Office:*
             </Grid>
             <Grid item xs={12} md={10}>
               <TextField
+                value={formData.tel_office}
+                name="tel_office"
+                onChange={handleChange}
                 id="outlined-size-small"
-                defaultValue=""
+                // defaultValue=""
                 size="small"
                 sx={{ width: 250, height: 25 }}
               />
             </Grid>
             <Grid item xs={12} md={2}>
-              <Typography>Tel.Extension:*</Typography>
+              Tel.Extension:*
             </Grid>
             <Grid item xs={12} md={10}>
               <TextField
+                value={formData.tel_extension}
+                name="tel_extension"
+                onChange={handleChange}
                 id="outlined-size-small"
-                defaultValue=""
+                // defaultValue=""
                 size="small"
                 sx={{ width: 250, height: 25 }}
               />
             </Grid>
             <Grid item xs={12} md={2}>
-              <Typography>Mobile:</Typography>
+              Mobile:
             </Grid>
             <Grid item xs={12} md={10}>
               <TextField
+                value={formData.mobile}
+                name="mobile"
+                onChange={handleChange}
                 id="outlined-size-small"
-                defaultValue=""
+                // defaultValue=""
                 size="small"
                 sx={{ width: 250, height: 25 }}
               />
@@ -99,78 +195,97 @@ const Address = () => {
 
           <Grid container spacing={2} alignItems="center">
             <Grid item xs={12} md={2}>
-              <Typography>House Number:</Typography>
+              House Number:
             </Grid>
             <Grid item xs={12} md={10}>
               <TextField
+                value={formData.house_number}
+                name="house_number"
+                onChange={handleChange}
                 id="outlined-size-small"
-                defaultValue=""
+                // defaultValue=""
                 size="small"
                 sx={{ width: 250, height: 25 }}
               />
             </Grid>
             <Grid item xs={12} md={2}>
-              <Typography>Floor:</Typography>
+              Floor:
             </Grid>
             <Grid item xs={12} md={10}>
               <TextField
+                value={formData.floor}
+                name="floor"
+                onChange={handleChange}
                 id="outlined-size-small"
-                defaultValue=""
+                // defaultValue=""
                 size="small"
                 sx={{ width: 250, height: 25 }}
               />
             </Grid>
             <Grid item xs={12} md={2}>
-              <Typography>Office Number:</Typography>
+              Office Number:
             </Grid>
             <Grid item xs={12} md={10}>
               <TextField
+                value={formData.office_number}
+                name="office_number"
+                onChange={handleChange}
                 id="outlined-size-small"
-                defaultValue=""
+                // defaultValue=""
                 size="small"
                 sx={{ width: 250, height: 25 }}
               />
             </Grid>
             <Grid item xs={12} md={2}>
-              <Typography>Email:</Typography>
+              Email:
             </Grid>
             <Grid item xs={12} md={10}>
               <TextField
+                value={formData.email}
+                name="email"
+                onChange={handleChange}
                 id="outlined-size-small"
-                defaultValue="info@eep.gov.et"
+                // defaultValue="info@eep.gov.et"
                 size="small"
                 sx={{ width: 250, height: 25 }}
               />
             </Grid>
             <Grid item xs={12} md={2}>
-              <Typography>Website:</Typography>
+              Website:
             </Grid>
             <Grid item xs={12} md={10}>
               <TextField
+                value={formData.website}
+                name="website"
+                onChange={handleChange}
                 id="outlined-size-small"
-                defaultValue="http://www.eep.gov.et"
+                // defaultValue="http://www.eep.gov.et"
                 size="small"
                 sx={{ width: 250, height: 25 }}
               />
             </Grid>
           </Grid>
         </Stack>
-      </Paper>
-      <Paper sx={{ padding: "10px" }} elevation={2}>
+      </Box>
+      <Box
+        backgroundColor={colors.primary[400]}
+        sx={{ padding: "20px", boxShadow: 2 }}
+      >
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={12} md={2}>
-            <Typography>Prepared by:</Typography>
+            Prepared by:
           </Grid>
           <Grid item xs={12} md={4}>
             <TextField
+              onChange={handleChange}
               id="outlined-size-small"
-              defaultValue=""
+              // defaultValue=""
               size="small"
               sx={{ width: 250, height: 25 }}
             />
           </Grid>
           <Grid item xs={12} md={2}>
-            <Typography>Prepared by:</Typography>
+            Prepared on:
           </Grid>
           <Grid item xs={12} md={4}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -185,14 +300,58 @@ const Address = () => {
             </LocalizationProvider>
           </Grid>
         </Grid>
-      </Paper>
-      <Paper sx={{ padding: "20px" }} elevation={2}>
-        <Stack direction="row" spacing={2} alignItems="center">
-          <Button color="success" variant="contained">
-            Save
-          </Button>
-        </Stack>
-      </Paper>
+      </Box>
+      <Box
+        backgroundColor={colors.primary[400]}
+        sx={{ padding: "20px", boxShadow: 2 }}
+      >
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <Box sx={{ m: 1, position: "relative" }}>
+            <Fab
+              aria-label="save"
+              sx={{
+                backgroundColor: colors.blueAccent[700],
+                color: colors.grey[100],
+              }}
+            >
+              {success ? <CheckIcon /> : <SaveIcon />}
+            </Fab>
+            {loading && (
+              <CircularProgress
+                size={68}
+                sx={{
+                  color: green[500],
+                  position: "absolute",
+                  top: -6,
+                  left: -6,
+                  zIndex: 1,
+                }}
+              />
+            )}
+          </Box>
+          <Box
+            sx={{
+              m: 1,
+              position: "relative",
+            }}
+          >
+            <Button
+              sx={{
+                backgroundColor: colors.blueAccent[700],
+                color: colors.grey[100],
+                fontSize: "14px",
+                fontWeight: "bold",
+                padding: "10px 20px",
+              }}
+              disabled={loading}
+              onClick={handleSubmit}
+            >
+              Save
+            </Button>
+            {loading}
+          </Box>
+        </Box>
+      </Box>
     </Box>
   );
 };

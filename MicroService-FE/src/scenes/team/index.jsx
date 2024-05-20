@@ -7,22 +7,34 @@ import { tokens } from "../../theme";
 // import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../components/Header";
 // import { useMockData } from "../MockDataContext";
-import { fetchItemsAction } from "../../actions";
+// import { fetchItemsAction } from "../../actions";
 import { deleteItemAction } from "../../actions";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
+import { addressThunks } from "../../store";
+
 const Team = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const items = useSelector((state) => state.items.items) || [];
-  // console.log(items);
   const dispatch = useDispatch();
+  const addressItems = useSelector((state) => state.getAllAddress.items);
+
+  // const items = useSelector((state) => state.getAllAddress.items) || [];
+  const ite = addressItems.map((item) => {
+    return { ...item, id: item.address_id };
+  });
+  console.log("Items :: ", ite);
+
+  // useEffect(() => {
+  //   dispatch(fetchItemsAction());
+  // }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchItemsAction());
+    const tenantId = 53;
+    dispatch(addressThunks.fetchItems(tenantId));
   }, [dispatch]);
 
   const handleDelete = (id) => {
@@ -61,7 +73,7 @@ const Team = () => {
 
       renderCell: (params) => (
         <div>
-          <Link to={`/edit/${params.row.id}`}>
+          <Link to={`edit/${params.row.id}`}>
             <button>Edit</button>
           </Link>
           <button onClick={() => handleDelete(params.row.id)}>Delete</button>
@@ -99,12 +111,12 @@ const Team = () => {
           },
         }}
       >
-        <Link to="/form">
+        <Link to="add">
           <Button color="secondary" variant="contained">
             Add Employee
           </Button>
         </Link>
-        <DataGrid rows={items} columns={columns} pageSize={5} />
+        <DataGrid rows={ite} columns={columns} pageSize={5} />
       </Box>
     </Box>
   );

@@ -1,12 +1,16 @@
-import axios from "axios";
+// import axios from "axios";
+import HttpClient from "../middleware/HttpClient.js";
 
-const api = axios.create({
-  baseURL: "http://localhost:3000/items", // Assuming your items.json is in the data folder
-});
+// const api = axios.create({
+//   baseURL: "http://localhost:3000/", // Assuming your items.json is in the data folder
+// });
 
-export const fetchItems = async () => {
+const api = HttpClient();
+
+export const fetchItems = async (tenantId) => {
   try {
-    const response = await api.get("http://localhost:3000/items");
+    const response = await api.get(`/${tenantId}/getAllAddress`);
+    console.log("from api service", response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching items:", error);
@@ -16,7 +20,7 @@ export const fetchItems = async () => {
 
 export const editItem = async (id, newItem) => {
   try {
-    await api.put(`http://localhost:3000/items/${id}`, newItem);
+    await api.put(`/editAddress/${id}`, newItem);
     return newItem;
   } catch (error) {
     console.error(`Error editing item with id ${id}:`, error);

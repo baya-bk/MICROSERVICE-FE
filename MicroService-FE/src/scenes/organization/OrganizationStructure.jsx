@@ -1,8 +1,9 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-
+import Button from "@mui/material/Button";
 import { RichTreeView } from "@mui/x-tree-view/RichTreeView";
-
+import { tokens } from "../../theme";
+import { useTheme } from "@mui/material";
 const MUI_X_PRODUCTS = [
   {
     id: "grid1",
@@ -47,10 +48,55 @@ const MUI_X_PRODUCTS = [
   },
 ];
 
+const getAllItemsWithChildrenItemIds = () => {
+  const itemIds = [];
+  const registerItemId = (item) => {
+    if (item.children?.length) {
+      itemIds.push(item.id);
+      item.children.forEach(registerItemId);
+    }
+  };
+
+  MUI_X_PRODUCTS.forEach(registerItemId);
+
+  return itemIds;
+};
+
 export default function OrganizationStructure() {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const [expandedItems, setExpandedItems] = React.useState([]);
+
+  const handleExpandedItemsChange = (event, itemIds) => {
+    setExpandedItems(itemIds);
+  };
+
+  const handleExpandClick = () => {
+    setExpandedItems((oldExpanded) =>
+      oldExpanded.length === 0 ? getAllItemsWithChildrenItemIds() : []
+    );
+  };
+
   return (
-    <Box sx={{ height: 220, flexGrow: 1, maxWidth: 400 }}>
-      <RichTreeView items={MUI_X_PRODUCTS} />
+    <Box sx={{ flexGrow: 1, maxWidth: 400 }}>
+      <Box sx={{ mb: 1 }}>
+        <Button
+          sx={{
+            backgroundColor: colors.blueAccent[700],
+            color: colors.grey[100],
+          }}
+          onClick={handleExpandClick}
+        >
+          {expandedItems.length === 0 ? "Expand all" : "Collapse all"}
+        </Button>
+      </Box>
+      <Box sx={{ minHeight: 200, flexGrow: 1 }}>
+        <RichTreeView
+          items={MUI_X_PRODUCTS}
+          expandedItems={expandedItems}
+          onExpandedItemsChange={handleExpandedItemsChange}
+        />
+      </Box>
     </Box>
   );
 }
