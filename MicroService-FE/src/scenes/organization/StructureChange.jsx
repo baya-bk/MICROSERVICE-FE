@@ -142,6 +142,7 @@ const StructureChange = () => {
             <Grid item xs={12} md={10}>
               <TextField
                 id="outlined-size-small"
+                variant="filled"
                 defaultValue=""
                 size="small"
                 sx={{ width: 250, height: 25 }}
@@ -153,6 +154,7 @@ const StructureChange = () => {
             <Grid item xs={12} md={10}>
               <TextField
                 id="outlined-size-small"
+                variant="filled"
                 defaultValue=""
                 size="small"
                 sx={{ width: 250, height: 25 }}
@@ -181,6 +183,7 @@ const StructureChange = () => {
             <Grid item xs={12} md={10}>
               <TextField
                 id="outlined-size-small"
+                variant="filled"
                 defaultValue="Use Only From + Button"
                 size="small"
                 sx={{ width: 200, height: 25 }}
@@ -207,6 +210,7 @@ const StructureChange = () => {
             <Grid item xs={12} md={10}>
               <Select
                 labelId="demo-simple-select-label"
+                variant="filled"
                 id="demo-simple-select"
                 value={region}
                 label="select"
@@ -254,6 +258,7 @@ const StructureChange = () => {
           <Grid item xs={12} md={4}>
             <TextField
               id="outlined-size-small"
+              variant="filled"
               defaultValue=""
               size="small"
               sx={{ width: 250, height: 25 }}

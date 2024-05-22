@@ -104,16 +104,17 @@ const Address = () => {
     >
       <Box
         backgroundColor={colors.primary[400]}
-        sx={{ padding: "20px", boxShadow: 2 }}
+        sx={{ padding: "30px", boxShadow: 2 }}
       >
         <Stack direction="row">
-          <Grid container spacing={3} alignItems="center">
+          <Grid container spacing={4} alignItems="center">
             <Grid item xs={12} md={2}>
               Address:*
             </Grid>
             <Grid item xs={12} md={10}>
               <TextField
                 value={formData.address}
+                variant="filled"
                 name="address"
                 onChange={handleChange}
                 id="outlined-size-small"
@@ -141,6 +142,7 @@ const Address = () => {
             <Grid item xs={12} md={10}>
               <TextField
                 name="block_number"
+                variant="filled"
                 value={formData.block_number}
                 onChange={handleChange}
                 id="outlined-size-small"
@@ -156,6 +158,7 @@ const Address = () => {
               <TextField
                 value={formData.tel_office}
                 name="tel_office"
+                variant="filled"
                 onChange={handleChange}
                 id="outlined-size-small"
                 // defaultValue=""
@@ -169,6 +172,7 @@ const Address = () => {
             <Grid item xs={12} md={10}>
               <TextField
                 value={formData.tel_extension}
+                variant="filled"
                 name="tel_extension"
                 onChange={handleChange}
                 id="outlined-size-small"
@@ -183,6 +187,7 @@ const Address = () => {
             <Grid item xs={12} md={10}>
               <TextField
                 value={formData.mobile}
+                variant="filled"
                 name="mobile"
                 onChange={handleChange}
                 id="outlined-size-small"
@@ -193,13 +198,14 @@ const Address = () => {
             </Grid>
           </Grid>
 
-          <Grid container spacing={2} alignItems="center">
+          <Grid container spacing={4} alignItems="center">
             <Grid item xs={12} md={2}>
               House Number:
             </Grid>
             <Grid item xs={12} md={10}>
               <TextField
                 value={formData.house_number}
+                variant="filled"
                 name="house_number"
                 onChange={handleChange}
                 id="outlined-size-small"
@@ -214,6 +220,7 @@ const Address = () => {
             <Grid item xs={12} md={10}>
               <TextField
                 value={formData.floor}
+                variant="filled"
                 name="floor"
                 onChange={handleChange}
                 id="outlined-size-small"
@@ -228,6 +235,7 @@ const Address = () => {
             <Grid item xs={12} md={10}>
               <TextField
                 value={formData.office_number}
+                variant="filled"
                 name="office_number"
                 onChange={handleChange}
                 id="outlined-size-small"
@@ -242,6 +250,7 @@ const Address = () => {
             <Grid item xs={12} md={10}>
               <TextField
                 value={formData.email}
+                variant="filled"
                 name="email"
                 onChange={handleChange}
                 id="outlined-size-small"
@@ -256,6 +265,7 @@ const Address = () => {
             <Grid item xs={12} md={10}>
               <TextField
                 value={formData.website}
+                variant="filled"
                 name="website"
                 onChange={handleChange}
                 id="outlined-size-small"
@@ -278,6 +288,7 @@ const Address = () => {
           <Grid item xs={12} md={4}>
             <TextField
               onChange={handleChange}
+              variant="filled"
               id="outlined-size-small"
               // defaultValue=""
               size="small"

@@ -8,6 +8,11 @@ import {
   Stack,
   Button,
   useTheme,
+  MenuItem,
+  InputLabel,
+  FormControlLabel,
+  RadioGroup,
+  Radio,
 } from "@mui/material";
 import {
   Dialog,
@@ -17,32 +22,24 @@ import {
   DialogContent,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-// import PlusIcon from "@mui/icons-material/PlusIcon";
-import MenuItem from "@mui/material/MenuItem";
-import InputLabel from "@mui/material/InputLabel";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import RadioGroup from "@mui/material/RadioGroup";
-import Radio from "@mui/material/Radio";
 import dayjs from "dayjs";
-import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import FormLabel from "@mui/material/FormLabel";
-import { tokens } from "../../theme";
 import AddIcon from "@mui/icons-material/Add";
 import SaveIcon from "@mui/icons-material/Save";
 import { useState } from "react";
-import { Formik, Form } from "formik";
-
-// import useMediaQuery from "@mui/material/useMediaQuery";
-
-// import FormControl from "@mui/material/FormControl";
+import { useFormik, Formik, Form } from "formik";
+import * as yup from "yup";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { tokens } from "../../theme";
 
 const Department = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [open, setOpen] = useState(false);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -50,26 +47,33 @@ const Department = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  // const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const [value, setValue] = React.useState("female");
-  const [tenant, setTenant] = React.useState("");
-  const [region, setRegion] = React.useState("");
 
   const initialValues = {
     department_name: "",
     mission: "",
     vision: "",
     department_values: "",
-    departmentType: 0,
-    location: 0,
-    established_on: "",
-    tenant: 0,
-    parent_id: 0,
+    departmentType: "",
+    location: "",
+    established_on: null,
+    tenant: "",
+    parent_id: "",
   };
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
+  const checkoutSchema = yup.object().shape({
+    department_name: yup.string().required("Required"),
+    departmentType: yup.string().required("Required"),
+    tenant: yup.string().required("Required"),
+    location: yup.string().required("Required"),
+    established_on: yup.date().required("Required").nullable(),
+  });
+
+  const isNonMobile = useMediaQuery("(min-width:600px)");
+
+  const handleFormSubmit = (values) => {
+    console.log(values);
   };
+
   return (
     <Box
       sx={{
@@ -79,222 +83,276 @@ const Department = () => {
         gap: "20px",
       }}
     >
-      <Formik>
-        <Form>
-          <Box
-            backgroundColor={colors.primary[400]}
-            sx={{ padding: "20px", boxShadow: 2 }}
-          >
-            <Stack direction="row">
-              <Grid container spacing={2} alignItems="center">
-                <Grid item xs={12} md={2}>
-                  <Typography>Departement:*</Typography>
-                </Grid>
-                <Grid item xs={12} md={9}>
-                  <TextField
-                    name="block_number"
-                    value=""
-                    onChange={handleChange}
-                    id="outlined-size-small"
-                    // defaultValue=""
-                    size="small"
-                    sx={{ width: 250, height: 25 }}
-                  />
-                </Grid>
-
-                <Grid item xs={12} md={2}>
-                  <FormLabel id="demo-radio-buttons-group-label">
-                    Type:*
-                  </FormLabel>
-                </Grid>
-                <Grid item xs={12} md={10}>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-row-radio-buttons-group-label"
-                    name="row-radio-buttons-group"
-                  >
-                    <FormControlLabel
-                      value="project"
-                      control={<Radio />}
-                      label="Project"
-                    />
-                    <FormControlLabel
-                      value="non-project"
-                      control={<Radio />}
-                      label="Non-project"
-                    />
-                  </RadioGroup>
-                </Grid>
-                <Grid item xs={12} md={2}>
-                  {" "}
-                  <Typography variant="h5">
-                    <InputLabel id="demo-radio-buttons-group-label">
-                      Tenant:
-                    </InputLabel>
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} md={10}>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={tenant}
-                    label="Tenant"
-                    onChange={handleChange}
-                    sx={{ width: 250, height: 35 }}
-                  >
-                    <MenuItem value={10}>Tenant1</MenuItem>
-                    <MenuItem value={20}>Tenant2</MenuItem>
-                    <MenuItem value={30}>Tenant3</MenuItem>
-                  </Select>
-                </Grid>
-                <Grid item xs={12} md={2}>
-                  {" "}
-                  <Typography variant="h5">
-                    <InputLabel id="demo-radio-buttons-group-label">
-                      Region:
-                    </InputLabel>
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} md={10}>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={region}
-                    label="Region"
-                    onChange={handleChange}
-                    sx={{ width: 250, height: 35 }}
-                  >
-                    <MenuItem value={10}>Adis Ababa</MenuItem>
-                    <MenuItem value={20}>Jimma</MenuItem>
-                    <MenuItem value={30}>Wolkite</MenuItem>
-                  </Select>
-                </Grid>
-                <Grid item xs={12} md={2}>
-                  Established on:
-                </Grid>
-                <Grid item xs={12} md={10}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={["DatePicker"]}>
-                      <DemoItem>
-                        <DatePicker
-                          sx={{ width: 250, height: 60 }}
-                          defaultValue={dayjs("2022-04-17")}
-                        />
-                      </DemoItem>
-                    </DemoContainer>
-                  </LocalizationProvider>
-                </Grid>
-              </Grid>
-
-              <Grid container spacing={2} alignItems="center">
-                <Grid item xs={12} md={2}>
-                  Mission:
-                </Grid>
-                <Grid item xs={12} md={10}>
-                  <TextField
-                    id="outlined-multiline-static"
-                    multiline
-                    rows={2}
-                    sx={{ width: 250 }}
-                  />
-                </Grid>
-                <Grid item xs={12} md={2}>
-                  Vision:
-                </Grid>
-                <Grid item xs={12} md={10}>
-                  <TextField
-                    id="outlined-multiline-static"
-                    multiline
-                    rows={2}
-                    sx={{ width: 250 }}
-                  />
-                </Grid>
-                <Grid item xs={12} md={2}>
-                  Values:
-                </Grid>
-                <Grid item xs={12} md={9}>
-                  <TextField
-                    id="outlined-multiline-static"
-                    multiline
-                    rows={2}
-                    sx={{ width: 250 }}
-                  />
-                </Grid>
-              </Grid>
-            </Stack>
-          </Box>
-
-          <Box
-            backgroundColor={colors.primary[400]}
-            sx={{ padding: "20px", boxShadow: 2 }}
-          >
+      <Formik
+        onSubmit={handleFormSubmit}
+        initialValues={initialValues}
+        validationSchema={checkoutSchema}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleBlur,
+          handleChange,
+          handleSubmit,
+          setFieldValue,
+        }) => (
+          <Form onSubmit={handleSubmit}>
             <Box
-              display="flex"
-              justifyContent="space-around"
-              alignItems="center"
+              backgroundColor={colors.primary[400]}
+              sx={{ padding: "20px", boxShadow: 2 }}
             >
-              <Button
-                color="error"
-                variant="contained"
-                sx={{
-                  fontSize: "14px",
-                  fontWeight: "bold",
-                  padding: "10px 20px",
-                }}
-                onClick={handleClickOpen}
-              >
-                <DeleteIcon sx={{ mr: "10px" }} />
-                Delete
-              </Button>
-              <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="responsive-dialog-title"
-              >
-                <DialogTitle variant="warning" id="responsive-dialog-title">
-                  {"Warning"}
-                </DialogTitle>
-                <DialogContent>
-                  <DialogContentText>
-                    Are you sure you want to delete?
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button autoFocus color="error" onClick={handleClose}>
-                    Delete
-                  </Button>
-                  <Button onClick={handleClose} autoFocus>
-                    Cancel
-                  </Button>
-                </DialogActions>
-              </Dialog>
-              <Button
-                sx={{
-                  backgroundColor: colors.blueAccent[700],
-                  color: colors.grey[100],
-                  fontSize: "14px",
-                  fontWeight: "bold",
-                  padding: "10px 20px",
-                }}
-              >
-                <SaveIcon sx={{ mr: "10px" }} />
-                Update
-              </Button>
-              <Button
-                color="success"
-                variant="contained"
-                sx={{
-                  fontSize: "14px",
-                  fontWeight: "bold",
-                  padding: "10px 20px",
-                }}
-              >
-                <AddIcon sx={{ mr: "10px" }} />
-                New
-              </Button>
+              <Stack direction="row">
+                <Grid container spacing={3} alignItems="center">
+                  <Grid item xs={12} md={2}>
+                    <Typography>Department:*</Typography>
+                  </Grid>
+                  <Grid item xs={12} md={9}>
+                    <TextField
+                      name="department_name"
+                      value={values.department_name}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      id="outlined-size-small"
+                      size="small"
+                      variant="filled"
+                      sx={{ width: 250, height: 25 }}
+                      error={
+                        touched.department_name && !!errors.department_name
+                      }
+                      helperText={
+                        touched.department_name && errors.department_name
+                      }
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} md={2}>
+                    <FormLabel id="department-type-label">Type:*</FormLabel>
+                  </Grid>
+                  <Grid item xs={12} md={10}>
+                    <RadioGroup
+                      row
+                      aria-labelledby="department-type-label"
+                      name="departmentType"
+                      value={values.departmentType}
+                      onChange={handleChange}
+                    >
+                      <FormControlLabel
+                        value="project"
+                        control={<Radio />}
+                        label="Project"
+                      />
+                      <FormControlLabel
+                        value="non-project"
+                        control={<Radio />}
+                        label="Non-project"
+                      />
+                    </RadioGroup>
+                    {touched.departmentType && errors.departmentType && (
+                      <Typography color="error">
+                        {errors.departmentType}
+                      </Typography>
+                    )}
+                  </Grid>
+
+                  <Grid item xs={12} md={2}>
+                    <Typography variant="h5">
+                      <InputLabel id="tenant-label">Tenant:*</InputLabel>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} md={10}>
+                    <Select
+                      variant="filled"
+                      labelId="tenant-label"
+                      id="tenant-select"
+                      name="tenant"
+                      value={values.tenant}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      sx={{ width: 250, height: 35 }}
+                      error={touched.tenant && !!errors.tenant}
+                    >
+                      <MenuItem value="">Select Tenant</MenuItem>
+                      <MenuItem value="10">Tenant1</MenuItem>
+                      <MenuItem value="20">Tenant2</MenuItem>
+                      <MenuItem value="30">Tenant3</MenuItem>
+                    </Select>
+                    {touched.tenant && errors.tenant && (
+                      <Typography color="error">{errors.tenant}</Typography>
+                    )}
+                  </Grid>
+
+                  <Grid item xs={12} md={2}>
+                    <Typography variant="h5">
+                      <InputLabel id="region-label">Region:*</InputLabel>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} md={10}>
+                    <Select
+                      labelId="region-label"
+                      id="region-select"
+                      name="location"
+                      variant="filled"
+                      value={values.location}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      sx={{ width: 250, height: 35 }}
+                      error={touched.location && !!errors.location}
+                    >
+                      <MenuItem value="">Select Region</MenuItem>
+                      <MenuItem value="10">Adis Ababa</MenuItem>
+                      <MenuItem value="20">Jimma</MenuItem>
+                      <MenuItem value="30">Wolkite</MenuItem>
+                    </Select>
+                    {touched.location && errors.location && (
+                      <Typography color="error">{errors.location}</Typography>
+                    )}
+                  </Grid>
+
+                  <Grid item xs={12} md={2}>
+                    Established on:
+                  </Grid>
+                  <Grid item xs={12} md={10}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DatePicker
+                        name="established_on"
+                        value={values.established_on}
+                        onChange={(newValue) => {
+                          setFieldValue("established_on", newValue);
+                        }}
+                        slotProps={{
+                          textField: {
+                            sx: { width: 250, height: 60 },
+                            error:
+                              touched.established_on && !!errors.established_on,
+                            helperText:
+                              touched.established_on && errors.established_on,
+                          },
+                        }}
+                      />
+                    </LocalizationProvider>
+                  </Grid>
+
+                  <Grid item xs={12} md={2}>
+                    Mission:
+                  </Grid>
+                  <Grid item xs={12} md={10}>
+                    <TextField
+                      name="mission"
+                      value={values.mission}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      multiline
+                      variant="filled"
+                      rows={2}
+                      sx={{ width: 250 }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={2}>
+                    Vision:
+                  </Grid>
+                  <Grid item xs={12} md={10}>
+                    <TextField
+                      name="vision"
+                      value={values.vision}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      multiline
+                      variant="filled"
+                      rows={2}
+                      sx={{ width: 250 }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={2}>
+                    Values:
+                  </Grid>
+                  <Grid item xs={12} md={9}>
+                    <TextField
+                      name="department_values"
+                      value={values.department_values}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      multiline
+                      variant="filled"
+                      rows={2}
+                      sx={{ width: 250 }}
+                    />
+                  </Grid>
+                </Grid>
+              </Stack>
             </Box>
-          </Box>
-        </Form>
+
+            <Box
+              backgroundColor={colors.primary[400]}
+              sx={{ padding: "20px", boxShadow: 2 }}
+            >
+              <Box
+                display="flex"
+                justifyContent="space-around"
+                alignItems="center"
+              >
+                <Button
+                  color="error"
+                  variant="contained"
+                  sx={{
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                    padding: "10px 20px",
+                  }}
+                  onClick={handleClickOpen}
+                >
+                  <DeleteIcon sx={{ mr: "10px" }} />
+                  Delete
+                </Button>
+                <Dialog
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="responsive-dialog-title"
+                >
+                  <DialogTitle variant="warning" id="responsive-dialog-title">
+                    {"Warning"}
+                  </DialogTitle>
+                  <DialogContent>
+                    <DialogContentText>
+                      Are you sure you want to delete?
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      autoFocus
+                      onClick={handleClose}
+                      color="error"
+                      variant="contained"
+                    >
+                      No
+                    </Button>
+                    <Button
+                      onClick={handleClose}
+                      autoFocus
+                      color="secondary"
+                      variant="contained"
+                    >
+                      Yes
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+                <Button
+                  type="submit"
+                  color="secondary"
+                  variant="contained"
+                  sx={{
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                    padding: "10px 20px",
+                  }}
+                >
+                  <SaveIcon sx={{ mr: "10px" }} />
+                  Save
+                </Button>
+              </Box>
+            </Box>
+          </Form>
+        )}
       </Formik>
     </Box>
   );

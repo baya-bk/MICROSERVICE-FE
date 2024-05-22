@@ -109,6 +109,7 @@ const StaffPlan = () => {
             <Grid item xs={12} md={10}>
               <Select
                 labelId="demo-simple-select-label"
+                variant="filled"
                 id="demo-simple-select"
                 value={tenant}
                 label="Tenant"
@@ -126,6 +127,7 @@ const StaffPlan = () => {
             <Grid item xs={12} md={10}>
               <TextField
                 id="outlined-size-small"
+                variant="filled"
                 defaultValue=""
                 size="small"
                 sx={{ width: 250, height: 25 }}
@@ -139,6 +141,7 @@ const StaffPlan = () => {
             <Grid item xs={12} md={10}>
               <TextField
                 id="outlined-size-small"
+                variant="filled"
                 defaultValue=""
                 size="small"
                 sx={{ width: 250, height: 25 }}
@@ -150,6 +153,7 @@ const StaffPlan = () => {
             <Grid item xs={12} md={10}>
               <TextField
                 id="outlined-size-small"
+                variant="filled"
                 defaultValue=""
                 size="small"
                 sx={{ width: 250, height: 25 }}
