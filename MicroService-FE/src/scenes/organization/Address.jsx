@@ -8,6 +8,7 @@ import {
   Stack,
   Button,
   useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import { tokens } from "../../theme";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -44,6 +45,8 @@ const Address = () => {
   };
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const isSmallScreen = useMediaQuery("(max-width:700px)");
+
   const dispatch = useDispatch();
   const [formData, setFormData] = useState(initialValues);
   // const formData = useSelector((state)) => state.;
@@ -96,7 +99,6 @@ const Address = () => {
   return (
     <Box
       sx={{
-        padding: "20px",
         display: "flex",
         flexDirection: "column",
         gap: "20px",
@@ -106,8 +108,8 @@ const Address = () => {
         backgroundColor={colors.primary[400]}
         sx={{ padding: "30px", boxShadow: 2 }}
       >
-        <Stack direction="row">
-          <Grid container spacing={4} alignItems="center">
+        <Stack direction={isSmallScreen ? "column" : "row"} gap={2}>
+          <Grid container spacing={5}>
             <Grid item xs={12} md={2}>
               Address:*
             </Grid>
@@ -167,7 +169,7 @@ const Address = () => {
               />
             </Grid>
             <Grid item xs={12} md={2}>
-              Tel.Extension:*
+              Tel. Extension:*
             </Grid>
             <Grid item xs={12} md={10}>
               <TextField
@@ -198,7 +200,7 @@ const Address = () => {
             </Grid>
           </Grid>
 
-          <Grid container spacing={4} alignItems="center">
+          <Grid container spacing={4}>
             <Grid item xs={12} md={2}>
               House Number:
             </Grid>
@@ -279,9 +281,9 @@ const Address = () => {
       </Box>
       <Box
         backgroundColor={colors.primary[400]}
-        sx={{ padding: "20px", boxShadow: 2 }}
+        sx={{ padding: "10px", boxShadow: 2 }}
       >
-        <Grid container spacing={2} alignItems="center">
+        <Grid container columnSpacing={10} rowSpacing={4}>
           <Grid item xs={12} md={2}>
             Prepared by:
           </Grid>

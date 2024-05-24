@@ -16,6 +16,7 @@ import { createThunks } from "./action/action";
 // Example for resource "address"
 const addressThunks = createThunks("getAllAddress");
 const addAddressThunks = createThunks("addAddress");
+// const addDepartmentThunks = createThunks("addDepartment");
 // const departmentThunks = createThunks("getAllDepartments");
 
 const store = configureStore({

@@ -7,6 +7,8 @@ import {
   Stack,
   Button,
   useTheme,
+  useMediaQuery,
+  Typography,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -27,6 +29,7 @@ import Alert from "@mui/material/Alert";
 const StaffPlan = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const isSmallScreen = useMediaQuery("(max-width:700px)");
   const [value, setValue] = React.useState("female");
   const [tenant, setTenant] = React.useState("");
   const [region, setRegion] = React.useState("");
@@ -89,7 +92,6 @@ const StaffPlan = () => {
   return (
     <Box
       sx={{
-        padding: "20px",
         display: "flex",
         flexDirection: "column",
         gap: "20px",
@@ -99,14 +101,14 @@ const StaffPlan = () => {
         backgroundColor={colors.primary[400]}
         sx={{ padding: "20px", boxShadow: 2 }}
       >
-        <Stack direction="row" spacing={2} alignItems="center">
-          <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} md={2}>
-              <InputLabel id="demo-radio-buttons-group-label">
-                Job Title:
-              </InputLabel>
+        <Stack padding={2} direction={isSmallScreen ? "column" : "row"} gap={5}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={3}>
+              <Typography variant="h5">
+                <InputLabel id="tenant-label">Job Title:*</InputLabel>
+              </Typography>
             </Grid>
-            <Grid item xs={12} md={10}>
+            <Grid item xs={12} md={9}>
               <Select
                 labelId="demo-simple-select-label"
                 variant="filled"
@@ -121,10 +123,10 @@ const StaffPlan = () => {
                 <MenuItem value={30}>Tenant3</MenuItem>
               </Select>
             </Grid>
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={3}>
               Quantity:
             </Grid>
-            <Grid item xs={12} md={10}>
+            <Grid item xs={12} md={9}>
               <TextField
                 id="outlined-size-small"
                 variant="filled"
@@ -135,10 +137,10 @@ const StaffPlan = () => {
             </Grid>
           </Grid>
           <Grid container spacing={3} alignItems="center">
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={3}>
               Job Code:
             </Grid>
-            <Grid item xs={12} md={10}>
+            <Grid item xs={12} md={9}>
               <TextField
                 id="outlined-size-small"
                 variant="filled"
@@ -147,10 +149,10 @@ const StaffPlan = () => {
                 sx={{ width: 250, height: 25 }}
               />
             </Grid>
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={3}>
               Job Grade:
             </Grid>
-            <Grid item xs={12} md={10}>
+            <Grid item xs={12} md={9}>
               <TextField
                 id="outlined-size-small"
                 variant="filled"
@@ -256,7 +258,7 @@ const StaffPlan = () => {
         backgroundColor={colors.primary[400]}
         sx={{ padding: "20px", boxShadow: 2 }}
       >
-        <Grid container spacing={2} alignItems="center">
+        <Grid container columnSpacing={10} rowSpacing={4}>
           <Grid item xs={12} md={2}>
             Prepared By:
           </Grid>

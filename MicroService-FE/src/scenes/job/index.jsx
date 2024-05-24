@@ -13,6 +13,7 @@ import {
   FormControlLabel,
   RadioGroup,
   Radio,
+  useMediaQuery,
 } from "@mui/material";
 
 import { DataGrid } from "@mui/x-data-grid";
@@ -26,6 +27,8 @@ import Header from "../../components/Header";
 export default function Job() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const isSmallScreen = useMediaQuery("(max-width:700px)");
+
   const [value, setValue] = React.useState("female");
   const [tenant, setTenant] = React.useState("");
   const [region, setRegion] = React.useState("");
@@ -91,7 +94,6 @@ export default function Job() {
 
       <Box
         sx={{
-          padding: "20px",
           display: "flex",
           flexDirection: "column",
           gap: "20px",
@@ -101,8 +103,12 @@ export default function Job() {
           backgroundColor={colors.primary[400]}
           sx={{ padding: "20px", boxShadow: 2 }}
         >
-          <Stack direction="row">
-            <Grid container spacing={3} alignItems="center">
+          <Stack
+            padding={2}
+            direction={isSmallScreen ? "column" : "row"}
+            gap={5}
+          >
+            <Grid container spacing={5}>
               <Grid item xs={12} md={3}>
                 <InputLabel id="demo-radio-buttons-group-label">
                   Tenant:*
@@ -228,12 +234,12 @@ export default function Job() {
                   onChange={handleChange}
                 >
                   <FormControlLabel
-                    value=""
+                    value="non-managerial"
                     control={<Radio />}
                     label="Non Managerial"
                   />
                   <FormControlLabel
-                    value=""
+                    value="managerial"
                     control={<Radio />}
                     label="Managerial"
                   />
@@ -366,8 +372,12 @@ export default function Job() {
           backgroundColor={colors.primary[400]}
           sx={{ padding: "20px", boxShadow: 2 }}
         >
-          <Stack direction="row">
-            <Grid container spacing={2} alignItems="center">
+          <Stack
+            padding={2}
+            direction={isSmallScreen ? "column" : "row"}
+            gap={5}
+          >
+            <Grid container spacing={2} rowSpacing={5}>
               <Grid item xs={12} md={3}>
                 <InputLabel id="demo-radio-buttons-group-label">
                   Language:*
@@ -417,27 +427,25 @@ export default function Job() {
               </Grid>
               <Grid item></Grid>
             </Grid>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={3}>
-                <InputLabel id="demo-radio-buttons-group-label">
-                  Language:*
-                </InputLabel>
-              </Grid>
-              <Grid item xs={12} md={9}>
-                <Select
-                  labelId="demo-simple-select-label"
-                  variant="filled"
-                  id="demo-simple-select"
-                  value={tenant}
-                  label="Tenant"
-                  onChange={handleChange}
-                  sx={{ width: 250, height: 35 }}
-                >
-                  <MenuItem value={10}>Tenant1</MenuItem>
-                  <MenuItem value={20}>Tenant2</MenuItem>
-                  <MenuItem value={30}>Tenant3</MenuItem>
-                </Select>
-              </Grid>
+            <Grid item xs={12} md={3}>
+              <InputLabel id="demo-radio-buttons-group-label">
+                Language:*
+              </InputLabel>
+            </Grid>
+            <Grid item xs={12} md={9}>
+              <Select
+                labelId="demo-simple-select-label"
+                variant="filled"
+                id="demo-simple-select"
+                value={tenant}
+                label="Tenant"
+                onChange={handleChange}
+                sx={{ width: 250, height: 35 }}
+              >
+                <MenuItem value={10}>Tenant1</MenuItem>
+                <MenuItem value={20}>Tenant2</MenuItem>
+                <MenuItem value={30}>Tenant3</MenuItem>
+              </Select>
             </Grid>
           </Stack>
         </Box>

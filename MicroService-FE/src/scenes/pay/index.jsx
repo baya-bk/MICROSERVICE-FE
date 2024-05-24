@@ -16,6 +16,7 @@ import {
   TextField,
   Typography,
   useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import Header from "../../components/Header";
 import AddIcon from "@mui/icons-material/Add";
@@ -27,6 +28,7 @@ import { useState } from "react";
 const Pay = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const isSmallScreen = useMediaQuery("(max-width:700px)");
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -66,7 +68,6 @@ const Pay = () => {
       <Header title="Pay Grade" />
       <Box
         sx={{
-          padding: "20px",
           display: "flex",
           flexDirection: "column",
           gap: "20px",
@@ -76,8 +77,12 @@ const Pay = () => {
           backgroundColor={colors.primary[400]}
           sx={{ padding: "20px", boxShadow: 2 }}
         >
-          <Stack direction="row">
-            <Grid container spacing={3} p="15px" alignItems="center">
+          <Stack
+            padding={2}
+            direction={isSmallScreen ? "column" : "row"}
+            gap={5}
+          >
+            <Grid container spacing={5}>
               <Grid item xs={12} md={3}>
                 Grade:*
               </Grid>
@@ -132,7 +137,7 @@ const Pay = () => {
               </Grid>
             </Grid>
 
-            <Grid container spacing={0} p="15px">
+            <Grid container spacing={0}>
               <Grid item xs={12} md={3}>
                 Mission:
               </Grid>
@@ -155,7 +160,7 @@ const Pay = () => {
           backgroundColor={colors.primary[400]}
           sx={{ padding: "20px", boxShadow: 2 }}
         >
-          <Grid container spacing={3} alignItems="center">
+          <Grid container spacing={3}>
             <Grid item xs={12} md={2}>
               <Typography variant="h5">
                 <InputLabel id="tenant-label">Tenant:*</InputLabel>

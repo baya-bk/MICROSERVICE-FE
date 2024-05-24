@@ -9,6 +9,7 @@ import {
   Stack,
   Button,
   Tooltip,
+  useMediaQuery,
 } from "@mui/material";
 // import PlusIcon from "@mui/icons-material/PlusIcon";
 import MenuItem from "@mui/material/MenuItem";
@@ -37,6 +38,7 @@ import AddIcon from "@mui/icons-material/Add";
 const StructureChange = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const isSmallScreen = useMediaQuery("(max-width:700px)");
 
   const [value, setValue] = React.useState("female");
   const [tenant, setTenant] = React.useState("");
@@ -72,47 +74,43 @@ const StructureChange = () => {
   };
 
   const columns = [
-    { field: "id", headerName: "ID" },
     {
-      field: "name",
+      field: "job_type",
       headerName: "Job Title",
-      flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
+      field: "type",
       headerName: "Type",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
+      flex: 1,
     },
     {
-      field: "phone",
+      field: "region",
       headerName: "Region",
       flex: 1,
     },
     {
-      field: "phone",
+      field: "address",
       headerName: "Address",
       flex: 1,
     },
     {
-      field: "phone",
+      field: "block_no",
       headerName: "Block No",
       flex: 1,
     },
     {
-      field: "phone",
+      field: "house_no",
       headerName: "House Number",
       flex: 1,
     },
     {
-      field: "phone",
+      field: "office_no",
       headerName: "Office Number",
       flex: 1,
     },
     {
-      field: "phone",
+      field: "process_date",
       headerName: "Process Date",
       flex: 1,
     },
@@ -124,7 +122,6 @@ const StructureChange = () => {
   return (
     <Box
       sx={{
-        padding: "20px",
         display: "flex",
         flexDirection: "column",
         gap: "20px",
@@ -132,14 +129,14 @@ const StructureChange = () => {
     >
       <Box
         backgroundColor={colors.primary[400]}
-        sx={{ padding: "20px", boxShadow: 2 }}
+        sx={{ padding: "10px", boxShadow: 2 }}
       >
-        <Stack direction="row" spacing={3} alignItems="center">
-          <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} md={2}>
+        <Stack direction={isSmallScreen ? "column" : "row"} spacing={2}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={3}>
               <Typography>Department Name:*</Typography>
             </Grid>
-            <Grid item xs={12} md={10}>
+            <Grid item xs={12} md={9}>
               <TextField
                 id="outlined-size-small"
                 variant="filled"
@@ -148,10 +145,10 @@ const StructureChange = () => {
                 sx={{ width: 250, height: 25 }}
               />
             </Grid>
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={3}>
               <Typography>Old Work Unit:*</Typography>
             </Grid>
-            <Grid item xs={12} md={10}>
+            <Grid item xs={12} md={9}>
               <TextField
                 id="outlined-size-small"
                 variant="filled"
@@ -160,12 +157,12 @@ const StructureChange = () => {
                 sx={{ width: 250, height: 25 }}
               />
             </Grid>
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={3}>
               <FormLabel id="demo-radio-buttons-group-label">
                 Is There Address Change?:*
               </FormLabel>
             </Grid>
-            <Grid item xs={12} md={10}>
+            <Grid item xs={12} md={9}>
               <RadioGroup
                 row
                 aria-labelledby="demo-row-radio-buttons-group-label"
@@ -177,10 +174,10 @@ const StructureChange = () => {
             </Grid>
           </Grid>
           <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={3}>
               <Typography>New Work Unit:*</Typography>
             </Grid>
-            <Grid item xs={12} md={10}>
+            <Grid item xs={12} md={9}>
               <TextField
                 id="outlined-size-small"
                 variant="filled"
@@ -202,12 +199,12 @@ const StructureChange = () => {
                 <AddIcon />
               </Fab>
             </Grid>
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={3}>
               <Typography>
                 <InputLabel id="demo-simple-select-label">Region:</InputLabel>
               </Typography>
             </Grid>
-            <Grid item xs={12} md={10}>
+            <Grid item xs={12} md={9}>
               <Select
                 labelId="demo-simple-select-label"
                 variant="filled"
@@ -222,10 +219,10 @@ const StructureChange = () => {
                 <MenuItem value={30}>Tenant3</MenuItem>
               </Select>
             </Grid>
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={3}>
               <FormLabel id="demo-radio-buttons-group-label">Type:*</FormLabel>
             </Grid>
-            <Grid item xs={12} md={10}>
+            <Grid item xs={12} md={9}>
               <RadioGroup
                 row
                 aria-labelledby="demo-row-radio-buttons-group-label"
@@ -251,7 +248,7 @@ const StructureChange = () => {
         backgroundColor={colors.primary[400]}
         sx={{ padding: "20px", boxShadow: 2 }}
       >
-        <Grid container spacing={2} alignItems="center">
+        <Grid container columnSpacing={10} rowSpacing={4}>
           <Grid item xs={12} md={2}>
             <Typography>Prepared by:</Typography>
           </Grid>
@@ -265,7 +262,7 @@ const StructureChange = () => {
             />
           </Grid>
           <Grid item xs={12} md={2}>
-            <Typography>Prepared by:</Typography>
+            <Typography>Prepared on:</Typography>
           </Grid>
           <Grid item xs={12} md={4}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -360,7 +357,7 @@ const StructureChange = () => {
           },
         }}
       >
-        <DataGrid rows="" columns={columns} pageSize={5} />
+        <DataGrid rows={[]} columns={columns} pageSize={5} />
       </Box>
     </Box>
   );
