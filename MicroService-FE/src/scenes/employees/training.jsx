@@ -8,14 +8,9 @@ import {
   useTheme,
   useMediaQuery,
   CircularProgress,
-  Fab,
   Typography,
   Alert,
   Snackbar,
-  FormControlLabel,
-  RadioGroup,
-  FormLabel,
-  Radio,
   MenuItem,
   Select,
   InputLabel,
@@ -24,10 +19,13 @@ import { Formik, Form } from "formik";
 import * as yup from "yup";
 import { tokens } from "../../theme";
 import SaveIcon from "@mui/icons-material/Save";
-import AddIcon from "@mui/icons-material/Add";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useRef } from "react";
 import { green } from "@mui/material/colors";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DateField } from "@mui/x-date-pickers/DateField";
+import dayjs from "dayjs";
 
 const Training = () => {
   const theme = useTheme();
@@ -118,119 +116,104 @@ const Training = () => {
             >
               <Stack direction={isSmallScreen ? "column" : "row"} gap={2}>
                 <Grid container spacing={5}>
-                  <Grid item xs={12} md={2}>
-                    <Typography>EmployeeId:*</Typography>
+                  <Grid item xs={12} md={3}>
+                    <Typography>Training Title:*</Typography>
                   </Grid>
-                  <Grid item xs={12} md={10}>
+                  <Grid item xs={12} md={9}>
                     <TextField
-                      name="block_number"
+                      name="training_title"
                       variant="filled"
-                      value={values.block_number}
+                      value={values.training_title}
                       onBlur={handleBlur}
                       onChange={handleChange}
                       id="outlined-size-small"
                       size="small"
                       sx={{ width: 250, height: 25 }}
+                      error={touched.training_title && !!errors.training_title}
+                      helperText={
+                        touched.training_title && errors.training_title
+                      }
                     />
                   </Grid>
-                  <Grid item xs={12} md={2}>
-                    <Typography>Address:*</Typography>
+                  <Grid item xs={12} md={3}>
+                    <Typography>Institution:*</Typography>
                   </Grid>
-                  <Grid item xs={12} md={10}>
+                  <Grid item xs={12} md={9}>
                     <TextField
-                      value={values.address}
+                      value={values.institution}
                       variant="filled"
-                      name="address"
+                      name="institution"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       id="outlined-size-small"
                       size="small"
                       sx={{ width: 200, height: 25 }}
-                      error={touched.address && !!errors.address}
-                      helperText={touched.address && errors.address}
+                      error={touched.institution && !!errors.institution}
+                      helperText={touched.institution && errors.institution}
                     />
-                    <Fab
-                      sx={{
-                        backgroundColor: colors.blueAccent[700],
-                        color: colors.grey[100],
-                        marginLeft: 1,
-                        width: 35,
-                        height: 35,
-                      }}
-                      size="small"
-                      aria-label="add"
-                    >
-                      <AddIcon />
-                    </Fab>
                   </Grid>
-                  <Grid item xs={12} md={2}>
-                    <FormLabel id="department-type-label">Type:*</FormLabel>
-                  </Grid>
-                  <Grid item xs={12} md={10}>
-                    <RadioGroup
-                      row
-                      aria-labelledby="department-type-label"
-                      name="departmentType"
-                      value={values.departmentType}
-                      onChange={handleChange}
-                    >
-                      <FormControlLabel
-                        value="project"
-                        control={<Radio />}
-                        label="Project"
-                      />
-                      <FormControlLabel
-                        value="non-project"
-                        control={<Radio />}
-                        label="Non-project"
-                      />
-                    </RadioGroup>
-                    {touched.departmentType && errors.departmentType && (
-                      <Typography color="error">
-                        {errors.departmentType}
-                      </Typography>
-                    )}
-                  </Grid>
-                  <Grid item xs={12} md={2}>
+                  <Grid item xs={12} md={3}>
                     <Typography variant="h5">
-                      <InputLabel id="tenant-label">Tenant:*</InputLabel>
+                      <InputLabel id="tenant-label">Sponsored by:*</InputLabel>
                     </Typography>
                   </Grid>
-                  <Grid item xs={12} md={10}>
+                  <Grid item xs={12} md={9}>
                     <Select
                       variant="filled"
                       labelId="tenant-label"
                       id="tenant-select"
-                      name="tenant"
-                      value={values.tenant}
+                      name="sponsored_by"
+                      value={values.sponsored_by}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       sx={{ width: 250, height: 35 }}
-                      error={touched.tenant && !!errors.tenant}
                     >
-                      <MenuItem value="">Select Tenant</MenuItem>
+                      <MenuItem value="">--Select One--</MenuItem>
                       <MenuItem value="10">Tenant1</MenuItem>
                       <MenuItem value="20">Tenant2</MenuItem>
                       <MenuItem value="30">Tenant3</MenuItem>
                     </Select>
-                    {touched.tenant && errors.tenant && (
-                      <Typography color="error">{errors.tenant}</Typography>
-                    )}
                   </Grid>
-                  <Grid item xs={12} md={2}>
-                    Mission:
+                  <Grid item>
+                    <Button
+                      sx={{
+                        backgroundColor: colors.blueAccent[700],
+                        color: colors.grey[100],
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                        padding: "10px 20px",
+                      }}
+                      // disabled={loading}
+                      // onClick={handleButtonClick}
+                    >
+                      Add
+                    </Button>
                   </Grid>
-                  <Grid item xs={12} md={10}>
-                    <TextField
-                      name="mission"
-                      value={values.mission}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      multiline
-                      variant="filled"
-                      rows={2}
-                      sx={{ width: 250 }}
-                    />
+                </Grid>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} md={3}>
+                    Start Date:*
+                  </Grid>
+                  <Grid item xs={12} md={9}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DateField
+                        variant="filled"
+                        defaultValue={dayjs("2022-04-17")}
+                        format="MM-DD-YYYY"
+                      />
+                    </LocalizationProvider>
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    End Date:*
+                  </Grid>
+                  <Grid item xs={12} md={9}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DateField
+                        variant="filled"
+                        defaultValue={dayjs("2022-04-17")}
+                        format="MM-DD-YYYY"
+                      />
+                    </LocalizationProvider>
                   </Grid>
                 </Grid>
               </Stack>

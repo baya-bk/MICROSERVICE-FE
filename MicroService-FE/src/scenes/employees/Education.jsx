@@ -12,10 +12,6 @@ import {
   Typography,
   Alert,
   Snackbar,
-  FormControlLabel,
-  RadioGroup,
-  FormLabel,
-  Radio,
   MenuItem,
   Select,
   InputLabel,
@@ -28,6 +24,10 @@ import AddIcon from "@mui/icons-material/Add";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useRef } from "react";
 import { green } from "@mui/material/colors";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateField } from "@mui/x-date-pickers/DateField";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 
 const Education = () => {
   const theme = useTheme();
@@ -117,20 +117,84 @@ const Education = () => {
               sx={{ padding: "30px", boxShadow: 2, marginBottom: "20px" }}
             >
               <Stack direction={isSmallScreen ? "column" : "row"} gap={2}>
-                <Grid container spacing={5}>
+                <Grid container spacing={3}>
                   <Grid item xs={12} md={2}>
-                    <Typography>EmployeeId:*</Typography>
+                    <Typography variant="h5">
+                      <InputLabel id="education-level-label">
+                        Education Level:*
+                      </InputLabel>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} md={10}>
+                    <Select
+                      variant="filled"
+                      labelId="education-level-label"
+                      id="education-level-select"
+                      name="education_level"
+                      value={values.education_level}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      sx={{ width: 250, height: 35 }}
+                      error={
+                        touched.education_level && !!errors.education_level
+                      }
+                    >
+                      <MenuItem value="">--Select One--</MenuItem>
+                      <MenuItem value="10">Tenant1</MenuItem>
+                      <MenuItem value="20">Tenant2</MenuItem>
+                      <MenuItem value="30">Tenant3</MenuItem>
+                    </Select>
+                    {touched.education_level && errors.education_level && (
+                      <Typography color="error">
+                        {errors.education_level}
+                      </Typography>
+                    )}
+                  </Grid>
+                  <Grid item xs={12} md={2}>
+                    <Typography variant="h5">
+                      <InputLabel id="field-of-study-label">
+                        Field of Study:*
+                      </InputLabel>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} md={10}>
+                    <Select
+                      variant="filled"
+                      labelId="field-of-study-label"
+                      id="field-of-study-select"
+                      name="field_of_study"
+                      value={values.field_of_study}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      sx={{ width: 250, height: 35 }}
+                      error={touched.field_of_study && !!errors.field_of_study}
+                    >
+                      <MenuItem value="">--Select One--</MenuItem>
+                      <MenuItem value="10">Tenant1</MenuItem>
+                      <MenuItem value="20">Tenant2</MenuItem>
+                      <MenuItem value="30">Tenant3</MenuItem>
+                    </Select>
+                    {touched.field_of_study && errors.field_of_study && (
+                      <Typography color="error">
+                        {errors.field_of_study}
+                      </Typography>
+                    )}
+                  </Grid>
+                  <Grid item xs={12} md={2}>
+                    <Typography>Institution:*</Typography>
                   </Grid>
                   <Grid item xs={12} md={10}>
                     <TextField
-                      name="block_number"
+                      name="institutionr"
                       variant="filled"
-                      value={values.block_number}
+                      value={values.institutionr}
                       onBlur={handleBlur}
                       onChange={handleChange}
                       id="outlined-size-small"
                       size="small"
                       sx={{ width: 250, height: 25 }}
+                      error={touched.institution && !!errors.institution}
+                      helperText={touched.institution && errors.institution}
                     />
                   </Grid>
                   <Grid item xs={12} md={2}>
@@ -164,72 +228,102 @@ const Education = () => {
                     </Fab>
                   </Grid>
                   <Grid item xs={12} md={2}>
-                    <FormLabel id="department-type-label">Type:*</FormLabel>
-                  </Grid>
-                  <Grid item xs={12} md={10}>
-                    <RadioGroup
-                      row
-                      aria-labelledby="department-type-label"
-                      name="departmentType"
-                      value={values.departmentType}
-                      onChange={handleChange}
-                    >
-                      <FormControlLabel
-                        value="project"
-                        control={<Radio />}
-                        label="Project"
-                      />
-                      <FormControlLabel
-                        value="non-project"
-                        control={<Radio />}
-                        label="Non-project"
-                      />
-                    </RadioGroup>
-                    {touched.departmentType && errors.departmentType && (
-                      <Typography color="error">
-                        {errors.departmentType}
-                      </Typography>
-                    )}
-                  </Grid>
-                  <Grid item xs={12} md={2}>
                     <Typography variant="h5">
-                      <InputLabel id="tenant-label">Tenant:*</InputLabel>
+                      <InputLabel id="sponsor-label">Sponsored by:*</InputLabel>
                     </Typography>
                   </Grid>
                   <Grid item xs={12} md={10}>
                     <Select
                       variant="filled"
-                      labelId="tenant-label"
-                      id="tenant-select"
-                      name="tenant"
-                      value={values.tenant}
+                      labelId="sponsor-label"
+                      id="sponsor-select"
+                      name="sponsored_by"
+                      value={values.sponsored_by}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       sx={{ width: 250, height: 35 }}
-                      error={touched.tenant && !!errors.tenant}
+                      error={touched.sponsored_by && !!errors.sponsored_by}
                     >
                       <MenuItem value="">Select Tenant</MenuItem>
                       <MenuItem value="10">Tenant1</MenuItem>
                       <MenuItem value="20">Tenant2</MenuItem>
                       <MenuItem value="30">Tenant3</MenuItem>
                     </Select>
-                    {touched.tenant && errors.tenant && (
-                      <Typography color="error">{errors.tenant}</Typography>
+                    {touched.sponsored_by && errors.sponsored_by && (
+                      <Typography color="error">
+                        {errors.sponsored_by}
+                      </Typography>
                     )}
                   </Grid>
-                  <Grid item xs={12} md={2}>
-                    Mission:
+                  <Grid item>
+                    <Button
+                      sx={{
+                        backgroundColor: colors.blueAccent[700],
+                        color: colors.grey[100],
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                        padding: "10px 20px",
+                      }}
+                      // disabled={loading}
+                      // onClick={handleButtonClick}
+                    >
+                      Add
+                    </Button>
                   </Grid>
-                  <Grid item xs={12} md={10}>
+                </Grid>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} md={3}>
+                    Start Date:*
+                  </Grid>
+                  <Grid item xs={12} md={9}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DateField
+                        variant="filled"
+                        defaultValue={dayjs("2022-04-17")}
+                        format="MM-DD-YYYY"
+                      />
+                    </LocalizationProvider>
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    End Date:*
+                  </Grid>
+                  <Grid item xs={12} md={9}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DateField
+                        variant="filled"
+                        defaultValue={dayjs("2022-04-17")}
+                        format="MM-DD-YYYY"
+                      />
+                    </LocalizationProvider>
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    <Typography>Result:</Typography>
+                  </Grid>
+                  <Grid item xs={12} md={9}>
                     <TextField
-                      name="mission"
-                      value={values.mission}
+                      name="result"
+                      variant="filled"
+                      value={values.result}
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      multiline
+                      id="outlined-size-small"
+                      size="small"
+                      sx={{ width: 250, height: 25 }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    <Typography>Award:</Typography>
+                  </Grid>
+                  <Grid item xs={12} md={9}>
+                    <TextField
+                      name="award"
                       variant="filled"
-                      rows={2}
-                      sx={{ width: 250 }}
+                      value={values.award}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      id="outlined-size-small"
+                      size="small"
+                      sx={{ width: 250, height: 25 }}
                     />
                   </Grid>
                 </Grid>

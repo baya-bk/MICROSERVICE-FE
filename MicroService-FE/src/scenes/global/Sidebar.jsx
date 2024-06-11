@@ -198,7 +198,7 @@ const MyProSidebar = () => {
             {admin && (
               <Item
                 title="Manage Employees"
-                to="team"
+                to="employee"
                 icon={<PeopleOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
@@ -233,7 +233,7 @@ const MyProSidebar = () => {
             {(admin || admin2) && (
               <Item
                 title="Employees"
-                to="employee"
+                to="team"
                 icon={<PersonOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}

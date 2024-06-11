@@ -8,23 +8,14 @@ import {
   useTheme,
   useMediaQuery,
   CircularProgress,
-  Fab,
   Typography,
   Alert,
   Snackbar,
-  FormControlLabel,
-  RadioGroup,
-  FormLabel,
-  Radio,
-  MenuItem,
-  Select,
-  InputLabel,
 } from "@mui/material";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
 import { tokens } from "../../theme";
 import SaveIcon from "@mui/icons-material/Save";
-import AddIcon from "@mui/icons-material/Add";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useRef } from "react";
 import { green } from "@mui/material/colors";
@@ -118,112 +109,64 @@ const Skill = () => {
             >
               <Stack direction={isSmallScreen ? "column" : "row"} gap={2}>
                 <Grid container spacing={5}>
-                  <Grid item xs={12} md={2}>
-                    <Typography>EmployeeId:*</Typography>
+                  <Grid item xs={12} md={3}>
+                    <Typography>Skill:*</Typography>
                   </Grid>
-                  <Grid item xs={12} md={10}>
+                  <Grid item xs={12} md={9}>
                     <TextField
-                      name="block_number"
+                      name="skill"
                       variant="filled"
-                      value={values.block_number}
+                      value={values.skill}
                       onBlur={handleBlur}
                       onChange={handleChange}
                       id="outlined-size-small"
                       size="small"
                       sx={{ width: 250, height: 25 }}
+                      error={touched.skill && !!errors.skill}
+                      helperText={touched.skill && errors.skill}
                     />
                   </Grid>
-                  <Grid item xs={12} md={2}>
-                    <Typography>Address:*</Typography>
+                  <Grid item xs={12} md={3}>
+                    <Typography>Skill Level:*</Typography>
                   </Grid>
-                  <Grid item xs={12} md={10}>
+                  <Grid item xs={12} md={9}>
                     <TextField
-                      value={values.address}
+                      name="skill_level"
                       variant="filled"
-                      name="address"
+                      value={values.skill_level}
                       onBlur={handleBlur}
                       onChange={handleChange}
                       id="outlined-size-small"
                       size="small"
-                      sx={{ width: 200, height: 25 }}
-                      error={touched.address && !!errors.address}
-                      helperText={touched.address && errors.address}
+                      sx={{ width: 250, height: 25 }}
+                      error={touched.skill_level && !!errors.skill_level}
+                      helperText={touched.skill_level && errors.skill_level}
                     />
-                    <Fab
+                  </Grid>
+                  <Grid item>
+                    <Button
                       sx={{
                         backgroundColor: colors.blueAccent[700],
                         color: colors.grey[100],
-                        marginLeft: 1,
-                        width: 35,
-                        height: 35,
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                        padding: "10px 20px",
                       }}
-                      size="small"
-                      aria-label="add"
+                      // disabled={loading}
+                      // onClick={handleButtonClick}
                     >
-                      <AddIcon />
-                    </Fab>
+                      Add
+                    </Button>
                   </Grid>
+                </Grid>
+                <Grid container spacing={3}>
                   <Grid item xs={12} md={2}>
-                    <FormLabel id="department-type-label">Type:*</FormLabel>
-                  </Grid>
-                  <Grid item xs={12} md={10}>
-                    <RadioGroup
-                      row
-                      aria-labelledby="department-type-label"
-                      name="departmentType"
-                      value={values.departmentType}
-                      onChange={handleChange}
-                    >
-                      <FormControlLabel
-                        value="project"
-                        control={<Radio />}
-                        label="Project"
-                      />
-                      <FormControlLabel
-                        value="non-project"
-                        control={<Radio />}
-                        label="Non-project"
-                      />
-                    </RadioGroup>
-                    {touched.departmentType && errors.departmentType && (
-                      <Typography color="error">
-                        {errors.departmentType}
-                      </Typography>
-                    )}
-                  </Grid>
-                  <Grid item xs={12} md={2}>
-                    <Typography variant="h5">
-                      <InputLabel id="tenant-label">Tenant:*</InputLabel>
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} md={10}>
-                    <Select
-                      variant="filled"
-                      labelId="tenant-label"
-                      id="tenant-select"
-                      name="tenant"
-                      value={values.tenant}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      sx={{ width: 250, height: 35 }}
-                      error={touched.tenant && !!errors.tenant}
-                    >
-                      <MenuItem value="">Select Tenant</MenuItem>
-                      <MenuItem value="10">Tenant1</MenuItem>
-                      <MenuItem value="20">Tenant2</MenuItem>
-                      <MenuItem value="30">Tenant3</MenuItem>
-                    </Select>
-                    {touched.tenant && errors.tenant && (
-                      <Typography color="error">{errors.tenant}</Typography>
-                    )}
-                  </Grid>
-                  <Grid item xs={12} md={2}>
-                    Mission:
+                    Description:
                   </Grid>
                   <Grid item xs={12} md={10}>
                     <TextField
-                      name="mission"
-                      value={values.mission}
+                      name="description"
+                      value={values.description}
                       onBlur={handleBlur}
                       onChange={handleChange}
                       multiline

@@ -346,7 +346,7 @@ const Personal = () => {
                       height="140"
                       image={
                         preview ||
-                        "../../../public/assets/Profile_avatar_placeholder_large.png"
+                        "/assets/Profile_avatar_placeholder_large.png"
                       }
                       alt="Profile Preview"
                     />

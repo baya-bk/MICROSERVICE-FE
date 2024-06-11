@@ -77,21 +77,46 @@ const Reference = () => {
   const columns = [
     { field: "id", headerName: "ID" },
     {
-      field: "name",
+      field: "full_name",
+      headerName: "Full Name",
+      flex: 1,
+      cellClassName: "name-column--cell",
+    },
+    {
+      field: "job_title",
       headerName: "Job Title",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
-      headerName: "Job Code",
+      field: "relationship",
+      headerName: "Relationship",
+      flex: 1,
+      cellClassName: "name-column--cell",
+    },
+
+    {
+      field: "phone_no",
+      headerName: "Phone No",
       type: "number",
       headerAlign: "left",
       align: "left",
     },
     {
-      field: "phone",
-      headerName: "Quantity",
+      field: "email",
+      headerName: "Email",
+      flex: 1,
+      cellClassName: "name-column--cell",
+    },
+    {
+      field: "remark",
+      headerName: "Remark",
+      flex: 1,
+      cellClassName: "name-column--cell",
+    },
+    {
+      field: "option",
+      headerName: "Option",
       flex: 1,
     },
   ];
@@ -118,112 +143,137 @@ const Reference = () => {
             >
               <Stack direction={isSmallScreen ? "column" : "row"} gap={2}>
                 <Grid container spacing={5}>
-                  <Grid item xs={12} md={2}>
-                    <Typography>EmployeeId:*</Typography>
+                  <Grid item xs={12} md={3}>
+                    <Typography>Full Name:*</Typography>
                   </Grid>
-                  <Grid item xs={12} md={10}>
+                  <Grid item xs={12} md={9}>
                     <TextField
-                      name="block_number"
+                      name="full_name"
                       variant="filled"
-                      value={values.block_number}
+                      value={values.full_name}
                       onBlur={handleBlur}
                       onChange={handleChange}
                       id="outlined-size-small"
                       size="small"
                       sx={{ width: 250, height: 25 }}
+                      error={touched.full_name && !!errors.full_name}
+                      helperText={touched.full_name && errors.full_name}
                     />
                   </Grid>
-                  <Grid item xs={12} md={2}>
-                    <Typography>Address:*</Typography>
+                  <Grid item xs={12} md={3}>
+                    <Typography>Relationship:*</Typography>
                   </Grid>
-                  <Grid item xs={12} md={10}>
+                  <Grid item xs={12} md={9}>
                     <TextField
-                      value={values.address}
+                      name="relationship"
                       variant="filled"
-                      name="address"
+                      value={values.relationship}
                       onBlur={handleBlur}
                       onChange={handleChange}
                       id="outlined-size-small"
                       size="small"
-                      sx={{ width: 200, height: 25 }}
-                      error={touched.address && !!errors.address}
-                      helperText={touched.address && errors.address}
+                      sx={{ width: 250, height: 25 }}
+                      error={touched.relationship && !!errors.relationship}
+                      helperText={touched.relationship && errors.relationship}
                     />
-                    <Fab
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    <Typography>Phone No:*</Typography>
+                  </Grid>
+                  <Grid item xs={12} md={9}>
+                    <TextField
+                      name="phone_no"
+                      variant="filled"
+                      value={values.phone_no}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      id="outlined-size-small"
+                      size="small"
+                      sx={{ width: 250, height: 25 }}
+                      error={touched.phone_no && !!errors.phone_no}
+                      helperText={touched.phone_no && errors.phone_no}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    <Typography>Job Title:*</Typography>
+                  </Grid>
+                  <Grid item xs={12} md={9}>
+                    <TextField
+                      name="job_title"
+                      variant="filled"
+                      value={values.job_title}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      id="outlined-size-small"
+                      size="small"
+                      sx={{ width: 250, height: 25 }}
+                      error={touched.job_title && !!errors.job_title}
+                      helperText={touched.job_title && errors.job_title}
+                    />
+                  </Grid>
+                  <Grid item>
+                    <Button
                       sx={{
                         backgroundColor: colors.blueAccent[700],
                         color: colors.grey[100],
-                        marginLeft: 1,
-                        width: 35,
-                        height: 35,
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                        padding: "10px 20px",
                       }}
-                      size="small"
-                      aria-label="add"
+                      // disabled={loading}
+                      // onClick={handleButtonClick}
                     >
-                      <AddIcon />
-                    </Fab>
+                      Add
+                    </Button>
                   </Grid>
-                  <Grid item xs={12} md={2}>
-                    <FormLabel id="department-type-label">Type:*</FormLabel>
+                </Grid>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} md={3}>
+                    <Typography>Occupation Address:*</Typography>
                   </Grid>
-                  <Grid item xs={12} md={10}>
-                    <RadioGroup
-                      row
-                      aria-labelledby="department-type-label"
-                      name="departmentType"
-                      value={values.departmentType}
-                      onChange={handleChange}
-                    >
-                      <FormControlLabel
-                        value="project"
-                        control={<Radio />}
-                        label="Project"
-                      />
-                      <FormControlLabel
-                        value="non-project"
-                        control={<Radio />}
-                        label="Non-project"
-                      />
-                    </RadioGroup>
-                    {touched.departmentType && errors.departmentType && (
-                      <Typography color="error">
-                        {errors.departmentType}
-                      </Typography>
-                    )}
-                  </Grid>
-                  <Grid item xs={12} md={2}>
-                    <Typography variant="h5">
-                      <InputLabel id="tenant-label">Tenant:*</InputLabel>
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} md={10}>
-                    <Select
-                      variant="filled"
-                      labelId="tenant-label"
-                      id="tenant-select"
-                      name="tenant"
-                      value={values.tenant}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      sx={{ width: 250, height: 35 }}
-                      error={touched.tenant && !!errors.tenant}
-                    >
-                      <MenuItem value="">Select Tenant</MenuItem>
-                      <MenuItem value="10">Tenant1</MenuItem>
-                      <MenuItem value="20">Tenant2</MenuItem>
-                      <MenuItem value="30">Tenant3</MenuItem>
-                    </Select>
-                    {touched.tenant && errors.tenant && (
-                      <Typography color="error">{errors.tenant}</Typography>
-                    )}
-                  </Grid>
-                  <Grid item xs={12} md={2}>
-                    Mission:
-                  </Grid>
-                  <Grid item xs={12} md={10}>
+                  <Grid item xs={12} md={9}>
                     <TextField
-                      name="mission"
-                      value={values.mission}
+                      name="occupation_address"
+                      variant="filled"
+                      value={values.occupation_address}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      id="outlined-size-small"
+                      size="small"
+                      sx={{ width: 250, height: 25 }}
+                      error={
+                        touched.occupation_address &&
+                        !!errors.occupation_address
+                      }
+                      helperText={
+                        touched.occupation_address && errors.occupation_address
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    <Typography>Email:*</Typography>
+                  </Grid>
+                  <Grid item xs={12} md={9}>
+                    <TextField
+                      name="email"
+                      variant="filled"
+                      value={values.email}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      id="outlined-size-small"
+                      size="small"
+                      sx={{ width: 250, height: 25 }}
+                      error={touched.email && !!errors.email}
+                      helperText={touched.email && errors.email}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    remark:
+                  </Grid>
+                  <Grid item xs={12} md={9}>
+                    <TextField
+                      name="remark"
+                      value={values.remark}
                       onBlur={handleBlur}
                       onChange={handleChange}
                       multiline

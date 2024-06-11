@@ -1,33 +1,31 @@
 import * as React from "react";
 import {
   Box,
-  TextField,
   Grid,
   Stack,
   Button,
   useTheme,
   useMediaQuery,
   CircularProgress,
-  Fab,
   Typography,
   Alert,
   Snackbar,
-  FormControlLabel,
-  RadioGroup,
-  FormLabel,
-  Radio,
   MenuItem,
   Select,
   InputLabel,
+  TextField,
 } from "@mui/material";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
 import { tokens } from "../../theme";
 import SaveIcon from "@mui/icons-material/Save";
-import AddIcon from "@mui/icons-material/Add";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useRef } from "react";
 import { green } from "@mui/material/colors";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DateField } from "@mui/x-date-pickers/DateField";
+import dayjs from "dayjs";
 
 const Membership = () => {
   const theme = useTheme();
@@ -75,23 +73,42 @@ const Membership = () => {
     }),
   };
   const columns = [
-    { field: "id", headerName: "ID" },
+    { field: "no", headerName: "No" },
     {
-      field: "name",
-      headerName: "Job Title",
+      field: "membership",
+      headerName: "Membership",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
-      headerName: "Job Code",
+      field: "sub_paid",
+      headerName: "Subscription Paid By",
+      flex: 1,
+      cellClassName: "name-column--cell",
+    },
+
+    {
+      field: "sub_amount",
+      headerName: "Subscription Amount",
       type: "number",
       headerAlign: "left",
       align: "left",
     },
     {
-      field: "phone",
-      headerName: "Quantity",
+      field: "sub_date",
+      headerName: "Subscription Date",
+      flex: 1,
+      cellClassName: "name-column--cell",
+    },
+    {
+      field: "sub_renewal",
+      headerName: "Subscription Renewal Date",
+      flex: 1,
+      cellClassName: "name-column--cell",
+    },
+    {
+      field: "option",
+      headerName: "Option",
       flex: 1,
     },
   ];
@@ -117,120 +134,119 @@ const Membership = () => {
               sx={{ padding: "30px", boxShadow: 2, marginBottom: "20px" }}
             >
               <Stack direction={isSmallScreen ? "column" : "row"} gap={2}>
-                <Grid container spacing={5}>
-                  <Grid item xs={12} md={2}>
-                    <Typography>EmployeeId:*</Typography>
-                  </Grid>
-                  <Grid item xs={12} md={10}>
-                    <TextField
-                      name="block_number"
-                      variant="filled"
-                      value={values.block_number}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      id="outlined-size-small"
-                      size="small"
-                      sx={{ width: 250, height: 25 }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={2}>
-                    <Typography>Address:*</Typography>
-                  </Grid>
-                  <Grid item xs={12} md={10}>
-                    <TextField
-                      value={values.address}
-                      variant="filled"
-                      name="address"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      id="outlined-size-small"
-                      size="small"
-                      sx={{ width: 200, height: 25 }}
-                      error={touched.address && !!errors.address}
-                      helperText={touched.address && errors.address}
-                    />
-                    <Fab
-                      sx={{
-                        backgroundColor: colors.blueAccent[700],
-                        color: colors.grey[100],
-                        marginLeft: 1,
-                        width: 35,
-                        height: 35,
-                      }}
-                      size="small"
-                      aria-label="add"
-                    >
-                      <AddIcon />
-                    </Fab>
-                  </Grid>
-                  <Grid item xs={12} md={2}>
-                    <FormLabel id="department-type-label">Type:*</FormLabel>
-                  </Grid>
-                  <Grid item xs={12} md={10}>
-                    <RadioGroup
-                      row
-                      aria-labelledby="department-type-label"
-                      name="departmentType"
-                      value={values.departmentType}
-                      onChange={handleChange}
-                    >
-                      <FormControlLabel
-                        value="project"
-                        control={<Radio />}
-                        label="Project"
-                      />
-                      <FormControlLabel
-                        value="non-project"
-                        control={<Radio />}
-                        label="Non-project"
-                      />
-                    </RadioGroup>
-                    {touched.departmentType && errors.departmentType && (
-                      <Typography color="error">
-                        {errors.departmentType}
-                      </Typography>
-                    )}
-                  </Grid>
-                  <Grid item xs={12} md={2}>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} md={3}>
                     <Typography variant="h5">
-                      <InputLabel id="tenant-label">Tenant:*</InputLabel>
+                      <InputLabel id="tenant-label">Membership:*</InputLabel>
                     </Typography>
                   </Grid>
-                  <Grid item xs={12} md={10}>
+                  <Grid item xs={12} md={9}>
                     <Select
                       variant="filled"
                       labelId="tenant-label"
                       id="tenant-select"
-                      name="tenant"
-                      value={values.tenant}
+                      name="membership"
+                      value={values.membership}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       sx={{ width: 250, height: 35 }}
-                      error={touched.tenant && !!errors.tenant}
+                      error={touched.membership && !!errors.membership}
                     >
                       <MenuItem value="">Select Tenant</MenuItem>
                       <MenuItem value="10">Tenant1</MenuItem>
                       <MenuItem value="20">Tenant2</MenuItem>
                       <MenuItem value="30">Tenant3</MenuItem>
                     </Select>
-                    {touched.tenant && errors.tenant && (
-                      <Typography color="error">{errors.tenant}</Typography>
+                    {touched.membership && errors.membership && (
+                      <Typography color="error">{errors.membership}</Typography>
                     )}
                   </Grid>
-                  <Grid item xs={12} md={2}>
-                    Mission:
+                  <Grid item xs={12} md={3}>
+                    <Typography variant="h5">
+                      <InputLabel id="tenant-label">
+                        Subscription Paid by:*
+                      </InputLabel>
+                    </Typography>
                   </Grid>
-                  <Grid item xs={12} md={10}>
+                  <Grid item xs={12} md={9}>
+                    <Select
+                      variant="filled"
+                      labelId="tenant-label"
+                      id="tenant-select"
+                      name="sub_paid"
+                      value={values.sub_paid}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      sx={{ width: 250, height: 35 }}
+                      error={touched.sub_paid && !!errors.sub_paid}
+                    >
+                      <MenuItem value="">Select Tenant</MenuItem>
+                      <MenuItem value="10">Tenant1</MenuItem>
+                      <MenuItem value="20">Tenant2</MenuItem>
+                      <MenuItem value="30">Tenant3</MenuItem>
+                    </Select>
+                    {touched.sub_paid && errors.sub_paid && (
+                      <Typography color="error">{errors.sub_paid}</Typography>
+                    )}
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    Subscription Date:*
+                  </Grid>
+                  <Grid item xs={12} md={9}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DateField
+                        variant="filled"
+                        defaultValue={dayjs("2022-04-17")}
+                        format="MM-DD-YYYY"
+                      />
+                    </LocalizationProvider>
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      sx={{
+                        backgroundColor: colors.blueAccent[700],
+                        color: colors.grey[100],
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                        padding: "10px 20px",
+                      }}
+                      // disabled={loading}
+                      // onClick={handleButtonClick}
+                    >
+                      Add
+                    </Button>
+                  </Grid>
+                </Grid>
+
+                <Grid container spacing={3}>
+                  <Grid item xs={12} md={3}>
+                    <Typography>Subscription Amount:*</Typography>
+                  </Grid>
+                  <Grid item xs={12} md={9}>
                     <TextField
-                      name="mission"
-                      value={values.mission}
+                      name="sub_amount"
+                      variant="filled"
+                      value={values.sub_amount}
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      multiline
-                      variant="filled"
-                      rows={2}
-                      sx={{ width: 250 }}
+                      id="outlined-size-small"
+                      size="small"
+                      sx={{ width: 250, height: 25 }}
+                      error={touched.sub_amount && !!errors.sub_amount}
+                      helperText={touched.sub_amount && errors.sub_amount}
                     />
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    Subscription Renewal Date:*
+                  </Grid>
+                  <Grid item xs={12} md={9}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DateField
+                        variant="filled"
+                        defaultValue={dayjs("2022-04-17")}
+                        format="MM-DD-YYYY"
+                      />
+                    </LocalizationProvider>
                   </Grid>
                 </Grid>
               </Stack>

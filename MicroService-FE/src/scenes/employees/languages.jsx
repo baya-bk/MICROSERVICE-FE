@@ -1,21 +1,15 @@
 import * as React from "react";
 import {
   Box,
-  TextField,
   Grid,
   Stack,
   Button,
   useTheme,
   useMediaQuery,
   CircularProgress,
-  Fab,
   Typography,
   Alert,
   Snackbar,
-  FormControlLabel,
-  RadioGroup,
-  FormLabel,
-  Radio,
   MenuItem,
   Select,
   InputLabel,
@@ -24,7 +18,6 @@ import { Formik, Form } from "formik";
 import * as yup from "yup";
 import { tokens } from "../../theme";
 import SaveIcon from "@mui/icons-material/Save";
-import AddIcon from "@mui/icons-material/Add";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useRef } from "react";
 import { green } from "@mui/material/colors";
@@ -75,24 +68,48 @@ const Languages = () => {
     }),
   };
   const columns = [
-    { field: "id", headerName: "ID" },
+    { field: "no", headerName: "No" },
     {
-      field: "name",
-      headerName: "Job Title",
-      flex: 1,
-      cellClassName: "name-column--cell",
-    },
-    {
-      field: "age",
-      headerName: "Job Code",
-      type: "number",
+      field: "language",
+      headerName: " Language",
       headerAlign: "left",
       align: "left",
     },
     {
-      field: "phone",
-      headerName: "Quantity",
-      flex: 1,
+      field: "listening",
+      headerName: "Listening",
+      type: "String",
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "speaking",
+      headerName: "Speaking",
+      type: "String",
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "reading",
+      headerName: "Reading",
+      type: "String",
+      headerAlign: "left",
+      align: "left",
+    },
+
+    {
+      field: "writing",
+      headerName: "Writing",
+      type: "String",
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "option",
+      headerName: "Option ",
+      type: "String",
+      headerAlign: "left",
+      align: "left",
     },
   ];
   const checkoutSchema = yup.object().shape({});
@@ -118,119 +135,154 @@ const Languages = () => {
             >
               <Stack direction={isSmallScreen ? "column" : "row"} gap={2}>
                 <Grid container spacing={5}>
-                  <Grid item xs={12} md={2}>
-                    <Typography>EmployeeId:*</Typography>
-                  </Grid>
-                  <Grid item xs={12} md={10}>
-                    <TextField
-                      name="block_number"
-                      variant="filled"
-                      value={values.block_number}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      id="outlined-size-small"
-                      size="small"
-                      sx={{ width: 250, height: 25 }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={2}>
-                    <Typography>Address:*</Typography>
-                  </Grid>
-                  <Grid item xs={12} md={10}>
-                    <TextField
-                      value={values.address}
-                      variant="filled"
-                      name="address"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      id="outlined-size-small"
-                      size="small"
-                      sx={{ width: 200, height: 25 }}
-                      error={touched.address && !!errors.address}
-                      helperText={touched.address && errors.address}
-                    />
-                    <Fab
-                      sx={{
-                        backgroundColor: colors.blueAccent[700],
-                        color: colors.grey[100],
-                        marginLeft: 1,
-                        width: 35,
-                        height: 35,
-                      }}
-                      size="small"
-                      aria-label="add"
-                    >
-                      <AddIcon />
-                    </Fab>
-                  </Grid>
-                  <Grid item xs={12} md={2}>
-                    <FormLabel id="department-type-label">Type:*</FormLabel>
-                  </Grid>
-                  <Grid item xs={12} md={10}>
-                    <RadioGroup
-                      row
-                      aria-labelledby="department-type-label"
-                      name="departmentType"
-                      value={values.departmentType}
-                      onChange={handleChange}
-                    >
-                      <FormControlLabel
-                        value="project"
-                        control={<Radio />}
-                        label="Project"
-                      />
-                      <FormControlLabel
-                        value="non-project"
-                        control={<Radio />}
-                        label="Non-project"
-                      />
-                    </RadioGroup>
-                    {touched.departmentType && errors.departmentType && (
-                      <Typography color="error">
-                        {errors.departmentType}
-                      </Typography>
-                    )}
-                  </Grid>
-                  <Grid item xs={12} md={2}>
+                  <Grid item xs={12} md={3}>
                     <Typography variant="h5">
-                      <InputLabel id="tenant-label">Tenant:*</InputLabel>
+                      <InputLabel id="tenant-label">Language Type:*</InputLabel>
                     </Typography>
                   </Grid>
-                  <Grid item xs={12} md={10}>
+                  <Grid item xs={12} md={9}>
                     <Select
                       variant="filled"
                       labelId="tenant-label"
                       id="tenant-select"
-                      name="tenant"
-                      value={values.tenant}
+                      name="language_type"
+                      value={values.language_type}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       sx={{ width: 250, height: 35 }}
-                      error={touched.tenant && !!errors.tenant}
+                      error={touched.language_type && !!errors.language_type}
                     >
-                      <MenuItem value="">Select Tenant</MenuItem>
+                      <MenuItem value="">--Select One--</MenuItem>
                       <MenuItem value="10">Tenant1</MenuItem>
                       <MenuItem value="20">Tenant2</MenuItem>
                       <MenuItem value="30">Tenant3</MenuItem>
                     </Select>
-                    {touched.tenant && errors.tenant && (
-                      <Typography color="error">{errors.tenant}</Typography>
+                    {touched.language_type && errors.language_type && (
+                      <Typography color="error">
+                        {errors.language_type}
+                      </Typography>
                     )}
                   </Grid>
-                  <Grid item xs={12} md={2}>
-                    Mission:
+                  <Grid item xs={12} md={3}>
+                    <Typography variant="h5">
+                      <InputLabel id="tenant-label">Listening:*</InputLabel>
+                    </Typography>
                   </Grid>
-                  <Grid item xs={12} md={10}>
-                    <TextField
-                      name="mission"
-                      value={values.mission}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      multiline
+                  <Grid item xs={12} md={9}>
+                    <Select
                       variant="filled"
-                      rows={2}
-                      sx={{ width: 250 }}
-                    />
+                      labelId="tenant-label"
+                      id="tenant-select"
+                      name="listening"
+                      value={values.listening}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      sx={{ width: 250, height: 35 }}
+                      error={touched.listening && !!errors.listening}
+                    >
+                      <MenuItem value="">--Select One--</MenuItem>
+                      <MenuItem value="10">Tenant1</MenuItem>
+                      <MenuItem value="20">Tenant2</MenuItem>
+                      <MenuItem value="30">Tenant3</MenuItem>
+                    </Select>
+                    {touched.listening && errors.listening && (
+                      <Typography color="error">{errors.listening}</Typography>
+                    )}
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    <Typography variant="h5">
+                      <InputLabel id="tenant-label">Reading:*</InputLabel>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} md={9}>
+                    <Select
+                      variant="filled"
+                      labelId="tenant-label"
+                      id="tenant-select"
+                      name="reading"
+                      value={values.reading}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      sx={{ width: 250, height: 35 }}
+                      error={touched.reading && !!errors.reading}
+                    >
+                      <MenuItem value="">--Select One--</MenuItem>
+                      <MenuItem value="10">Tenant1</MenuItem>
+                      <MenuItem value="20">Tenant2</MenuItem>
+                      <MenuItem value="30">Tenant3</MenuItem>
+                    </Select>
+                    {touched.reading && errors.reading && (
+                      <Typography color="error">{errors.reading}</Typography>
+                    )}
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      sx={{
+                        backgroundColor: colors.blueAccent[700],
+                        color: colors.grey[100],
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                        padding: "10px 20px",
+                      }}
+                      // disabled={loading}
+                      // onClick={handleButtonClick}
+                    >
+                      Add
+                    </Button>
+                  </Grid>
+                </Grid>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} md={3}>
+                    <Typography variant="h5">
+                      <InputLabel id="tenant-label">Speaking:*</InputLabel>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} md={9}>
+                    <Select
+                      variant="filled"
+                      labelId="tenant-label"
+                      id="tenant-select"
+                      name="spaeking"
+                      value={values.spaeking}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      sx={{ width: 250, height: 35 }}
+                      error={touched.spaeking && !!errors.spaeking}
+                    >
+                      <MenuItem value="">--Select One--</MenuItem>
+                      <MenuItem value="10">Tenant1</MenuItem>
+                      <MenuItem value="20">Tenant2</MenuItem>
+                      <MenuItem value="30">Tenant3</MenuItem>
+                    </Select>
+                    {touched.speaking && errors.speaking && (
+                      <Typography color="error">{errors.speaking}</Typography>
+                    )}
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    <Typography variant="h5">
+                      <InputLabel id="tenant-label">Writing:*</InputLabel>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} md={9}>
+                    <Select
+                      variant="filled"
+                      labelId="tenant-label"
+                      id="tenant-select"
+                      name="writing"
+                      value={values.writing}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      sx={{ width: 250, height: 35 }}
+                      error={touched.writing && !!errors.writing}
+                    >
+                      <MenuItem value="">--Select One--</MenuItem>
+                      <MenuItem value="10">Tenant1</MenuItem>
+                      <MenuItem value="20">Tenant2</MenuItem>
+                      <MenuItem value="30">Tenant3</MenuItem>
+                    </Select>
+                    {touched.writing && errors.writing && (
+                      <Typography color="error">{errors.writing}</Typography>
+                    )}
                   </Grid>
                 </Grid>
               </Stack>

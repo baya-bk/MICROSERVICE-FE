@@ -12,10 +12,6 @@ import {
   Typography,
   Alert,
   Snackbar,
-  FormControlLabel,
-  RadioGroup,
-  FormLabel,
-  Radio,
   MenuItem,
   Select,
   InputLabel,
@@ -117,86 +113,13 @@ const Address = () => {
               sx={{ padding: "30px", boxShadow: 2, marginBottom: "20px" }}
             >
               <Stack direction={isSmallScreen ? "column" : "row"} gap={2}>
-                <Grid container spacing={5}>
-                  <Grid item xs={12} md={2}>
-                    <Typography>EmployeeId:*</Typography>
-                  </Grid>
-                  <Grid item xs={12} md={10}>
-                    <TextField
-                      name="block_number"
-                      variant="filled"
-                      value={values.block_number}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      id="outlined-size-small"
-                      size="small"
-                      sx={{ width: 250, height: 25 }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={2}>
-                    <Typography>Address:*</Typography>
-                  </Grid>
-                  <Grid item xs={12} md={10}>
-                    <TextField
-                      value={values.address}
-                      variant="filled"
-                      name="address"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      id="outlined-size-small"
-                      size="small"
-                      sx={{ width: 200, height: 25 }}
-                      error={touched.address && !!errors.address}
-                      helperText={touched.address && errors.address}
-                    />
-                    <Fab
-                      sx={{
-                        backgroundColor: colors.blueAccent[700],
-                        color: colors.grey[100],
-                        marginLeft: 1,
-                        width: 35,
-                        height: 35,
-                      }}
-                      size="small"
-                      aria-label="add"
-                    >
-                      <AddIcon />
-                    </Fab>
-                  </Grid>
-                  <Grid item xs={12} md={2}>
-                    <FormLabel id="department-type-label">Type:*</FormLabel>
-                  </Grid>
-                  <Grid item xs={12} md={10}>
-                    <RadioGroup
-                      row
-                      aria-labelledby="department-type-label"
-                      name="departmentType"
-                      value={values.departmentType}
-                      onChange={handleChange}
-                    >
-                      <FormControlLabel
-                        value="project"
-                        control={<Radio />}
-                        label="Project"
-                      />
-                      <FormControlLabel
-                        value="non-project"
-                        control={<Radio />}
-                        label="Non-project"
-                      />
-                    </RadioGroup>
-                    {touched.departmentType && errors.departmentType && (
-                      <Typography color="error">
-                        {errors.departmentType}
-                      </Typography>
-                    )}
-                  </Grid>
-                  <Grid item xs={12} md={2}>
+                <Grid container spacing={4}>
+                  <Grid item xs={12} md={3}>
                     <Typography variant="h5">
-                      <InputLabel id="tenant-label">Tenant:*</InputLabel>
+                      <InputLabel id="tenant-label">Address For:*</InputLabel>
                     </Typography>
                   </Grid>
-                  <Grid item xs={12} md={10}>
+                  <Grid item xs={12} md={9}>
                     <Select
                       variant="filled"
                       labelId="tenant-label"
@@ -217,19 +140,141 @@ const Address = () => {
                       <Typography color="error">{errors.tenant}</Typography>
                     )}
                   </Grid>
-                  <Grid item xs={12} md={2}>
-                    Mission:
+                  <Grid item xs={12} md={3}>
+                    <Typography>Address:</Typography>
                   </Grid>
-                  <Grid item xs={12} md={10}>
+                  <Grid item xs={12} md={9}>
                     <TextField
-                      name="mission"
-                      value={values.mission}
+                      value={values.address}
+                      variant="filled"
+                      name="address"
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      multiline
+                      id="outlined-size-small"
+                      size="small"
+                      sx={{ width: 200, height: 25 }}
+                    />
+                    <Fab
+                      sx={{
+                        backgroundColor: colors.blueAccent[700],
+                        color: colors.grey[100],
+                        marginLeft: 1,
+                        width: 35,
+                        height: 35,
+                      }}
+                      size="small"
+                      aria-label="add"
+                    >
+                      <AddIcon />
+                    </Fab>
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    <Typography>Home Phone:</Typography>
+                  </Grid>
+                  <Grid item xs={12} md={9}>
+                    <TextField
+                      name="last_name"
                       variant="filled"
-                      rows={2}
-                      sx={{ width: 250 }}
+                      value={values.last_name}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      id="outlined-size-small"
+                      size="small"
+                      sx={{ width: 250, height: 25 }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    <Typography>House Number:</Typography>
+                  </Grid>
+                  <Grid item xs={12} md={9}>
+                    <TextField
+                      name="last_name"
+                      variant="filled"
+                      value={values.last_name}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      id="outlined-size-small"
+                      size="small"
+                      sx={{ width: 250, height: 25 }}
+                    />
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      sx={{
+                        backgroundColor: colors.blueAccent[700],
+                        color: colors.grey[100],
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                        padding: "10px 20px",
+                      }}
+                      // disabled={loading}
+                      // onClick={handleButtonClick}
+                    >
+                      Add
+                    </Button>
+                  </Grid>
+                </Grid>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} md={3}>
+                    <Typography>Email:</Typography>
+                  </Grid>
+                  <Grid item xs={12} md={9}>
+                    <TextField
+                      name="email"
+                      variant="filled"
+                      value={values.email}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      id="outlined-size-small"
+                      size="small"
+                      sx={{ width: 250, height: 25 }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    <Typography>Mobile:*</Typography>
+                  </Grid>
+                  <Grid item xs={12} md={9}>
+                    <TextField
+                      name="mobile"
+                      variant="filled"
+                      value={values.mobile}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      id="outlined-size-small"
+                      size="small"
+                      sx={{ width: 250, height: 25 }}
+                      error={touched.mobile && !!errors.mobile}
+                      helperText={touched.mobile && errors.mobile}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    <Typography>Office Phone:</Typography>
+                  </Grid>
+                  <Grid item xs={12} md={9}>
+                    <TextField
+                      name="office_phone"
+                      variant="filled"
+                      value={values.office_phone}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      id="outlined-size-small"
+                      size="small"
+                      sx={{ width: 250, height: 25 }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    <Typography>P.O.Box:</Typography>
+                  </Grid>
+                  <Grid item xs={12} md={9}>
+                    <TextField
+                      name="p.o.box"
+                      variant="filled"
+                      value={values.box}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      id="outlined-size-small"
+                      size="small"
+                      sx={{ width: 250, height: 25 }}
                     />
                   </Grid>
                 </Grid>
