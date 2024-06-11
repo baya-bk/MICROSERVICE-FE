@@ -4,68 +4,57 @@ import Button from "@mui/material/Button";
 import { RichTreeView } from "@mui/x-tree-view/RichTreeView";
 import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
-const MUI_X_PRODUCTS = [
-  {
-    id: "grid1",
-    label: "INSA",
-    children: [
-      {
-        id: "pickers",
-        label: "GADA",
-        children: [
-          { id: "pickers-community", label: "@mui/x-date-pickers" },
-          { id: "pickers-pro", label: "@mui/x-date-pickers-pro" },
-        ],
-      },
-      { id: "grid-community", label: "Construction Project" },
-      { id: "grid-pro", label: "EEPERP" },
-      { id: "grid-premium", label: "mmmmm" },
-      { id: "grid2", label: "Infrormation" },
-      {
-        id: "pickers2",
-        label: "BIFTU",
-        children: [
-          { id: "biftu1", label: "@mui/x-date-pickers" },
-          { id: "biftu2", label: "@mui/x-date-pickers-pro" },
-        ],
-      },
-      {
-        id: "pickers3",
-        label: "wwww",
-        children: [
-          { id: "wwww1", label: "@mui/x-date-pickers" },
-          { id: "wwww2", label: "@mui/x-date-pickers-pro" },
-        ],
-      },
-      { id: "grid3", label: "its" },
-      { id: "grid4", label: "service provider" },
-      {
-        id: "grid5",
-        label: "sample",
-      },
-      { id: "grid6", label: "zzzz" },
-    ],
-  },
-];
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getDepartmentThunks, getDepartmentByIdThunks } from "../../store";
+import { ExpandMore, ChevronRight, Folder, GetApp } from "@mui/icons-material";
 
-const getAllItemsWithChildrenItemIds = () => {
-  const itemIds = [];
-  const registerItemId = (item) => {
-    if (item.children?.length) {
-      itemIds.push(item.id);
-      item.children.forEach(registerItemId);
+// eslint-disable-next-line react/prop-types
+export default function OrganizationStructure({ setValue }) {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const [expanded, setExpanded] = React.useState("");
+  const [expandedItems, setExpandedItems] = React.useState([]);
+  const dispatch = useDispatch();
+  const departmentItems = useSelector((state) => state.getAllDepartment.items);
+  useEffect(() => {
+    const tenantId = 2;
+    dispatch(getDepartmentThunks.fetchItems(tenantId));
+  }, [dispatch]);
+
+  const mapDepartmentsToTree = (departments, parentId = 0) => {
+    return departments
+      .filter((department) => department.parent_id === parentId)
+      .map((department) => ({
+        id: department.department_id.toString(),
+        label: department.department_name,
+
+        children: mapDepartmentsToTree(departments, department.department_id),
+      }));
+  };
+
+  //only expand if icon was clicked
+  const handleToggle = (event, nodeIds) => {
+    event.persist();
+    let iconClicked = event.target.closest(".MuiTreeItem-iconContainer");
+    if (iconClicked) {
+      setExpanded(nodeIds);
     }
   };
 
-  MUI_X_PRODUCTS.forEach(registerItemId);
+  //only select if icon wasn't clicked
+  const handleSelect = (event, id) => {
+    event.persist();
+    const tenantId = 2;
+    let iconClicked = event.target.closest(".MuiTreeItem-iconContainer");
+    if (!iconClicked) {
+      dispatch(getDepartmentByIdThunks.fetchItemById(tenantId, id));
+      setValue(1);
+      console.log("iddsdds", id);
+    }
+  };
 
-  return itemIds;
-};
-
-export default function OrganizationStructure() {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  const [expandedItems, setExpandedItems] = React.useState([]);
+  const mappedDepartments = mapDepartmentsToTree(departmentItems);
 
   const handleExpandedItemsChange = (event, itemIds) => {
     setExpandedItems(itemIds);
@@ -73,8 +62,28 @@ export default function OrganizationStructure() {
 
   const handleExpandClick = () => {
     setExpandedItems((oldExpanded) =>
-      oldExpanded.length === 0 ? getAllItemsWithChildrenItemIds() : []
+      oldExpanded.length === 0
+        ? getAllItemsWithChildrenItemIds(mappedDepartments)
+        : []
     );
+  };
+
+  const getAllItemsWithChildrenItemIds = (items) => {
+    const itemIds = [];
+    const registerItemId = (item) => {
+      if (item.children?.length) {
+        itemIds.push(item.id);
+        item.children.forEach(registerItemId);
+      }
+    };
+
+    items.forEach(registerItemId);
+
+    return itemIds;
+  };
+
+  const handleSelectedItemsChange = (event, ids) => {
+    console.log("iddddddd", ids);
   };
 
   return (
@@ -92,9 +101,11 @@ export default function OrganizationStructure() {
       </Box>
       <Box sx={{ minHeight: 200, flexGrow: 1 }}>
         <RichTreeView
-          items={MUI_X_PRODUCTS}
+          items={mappedDepartments}
           expandedItems={expandedItems}
           onExpandedItemsChange={handleExpandedItemsChange}
+          onSelectedItemsChange={handleSelect}
+          onItemSelectionToggle={handleToggle}
         />
       </Box>
     </Box>

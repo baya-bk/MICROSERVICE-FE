@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import {
   Box,
   TextField,
@@ -13,6 +13,7 @@ import {
   FormControlLabel,
   RadioGroup,
   Radio,
+  CircularProgress,
 } from "@mui/material";
 import {
   Dialog,
@@ -30,15 +31,85 @@ import FormLabel from "@mui/material/FormLabel";
 import AddIcon from "@mui/icons-material/Add";
 import SaveIcon from "@mui/icons-material/Save";
 import { useState } from "react";
-import { useFormik, Formik, Form } from "formik";
+import { Formik, Form } from "formik";
 import * as yup from "yup";
-import useMediaQuery from "@mui/material/useMediaQuery";
+// import useMediaQuery from "@mui/material/useMediaQuery";
+import { useDispatch, useSelector } from "react-redux";
+import { addDepartmentThunks } from "../../store";
+import { updateDepartmentThunks } from "../../store";
+
 import { tokens } from "../../theme";
+import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
+import { useEffect } from "react";
+
+const initialValues = {
+  department_id: 7,
+  department_name: "",
+  mission: "",
+  vision: "",
+  department_values: "",
+  departmentType: 2,
+  location: 1,
+  established_on: null,
+  tenant: 2,
+  parent_id: 1,
+  created_by: "",
+  created_on: "2024-05-30T12:59:07.252Z",
+  isActive: true,
+};
 
 const Department = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+  const [department, setDepartment] = useState({
+    department_id: 0,
+    department_name: "",
+    mission: "",
+    vision: "",
+    department_values: "",
+    departmentType: 2,
+    location: 1,
+    established_on: null,
+    tenant: 2,
+    parent_id: 1,
+    created_by: "",
+    created_on: "2024-05-30T12:59:07.252Z",
+    isActive: true,
+  });
+
+  const departmentItems = useSelector((state) => state.getDepartmentById.items);
+  console.log("populated departmemt", departmentItems[0]);
+  const dept = departmentItems[0];
+
+  // Function to map departmentItems to department state
+  const mapDepartmentItems = (dept) => {
+    setDepartment({
+      department_id: dept.department_id || 0,
+      department_name: dept.department_name || "",
+      mission: dept.mission || "",
+      vision: dept.vision || "",
+      department_values: dept.department_values || "",
+      departmentType:
+        dept.department_type_name === "Engineering" ? "project" : "non-project",
+      location: dept.location_name === "Headquarters" ? 1 : 0,
+      established_on: dept.established_on || null,
+      tenant: dept.tenant || 2,
+      parent_id: dept.parent_id || 1,
+      created_by: dept.created_by || "",
+      created_on: dept.created_on || "",
+      isActive: dept.isActive || true,
+    });
+  };
+
+  useEffect(() => {
+    if (departmentItems.length > 0) {
+      mapDepartmentItems(departmentItems[0]);
+    }
+  }, [departmentItems]);
+  console.log("department state ", department);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -46,18 +117,6 @@ const Department = () => {
 
   const handleClose = () => {
     setOpen(false);
-  };
-
-  const initialValues = {
-    department_name: "",
-    mission: "",
-    vision: "",
-    department_values: "",
-    departmentType: "",
-    location: "",
-    established_on: null,
-    tenant: "",
-    parent_id: "",
   };
 
   const checkoutSchema = yup.object().shape({
@@ -68,24 +127,69 @@ const Department = () => {
     established_on: yup.date().required("Required").nullable(),
   });
 
-  const isNonMobile = useMediaQuery("(min-width:600px)");
+  // const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
+  // const handleFormSubmit = (values) => {
+  //   console.log(values);
+  // };
+  const dispatch = useDispatch();
+  const handleFormSubmit = async (values, { setSubmitting }) => {
+    try {
+      setSuccess(false);
+      setLoading(true);
+
+      await dispatch(addDepartmentThunks.addItem(values.tenant, values)).then(
+        (res) => {
+          setSuccess(true);
+          console.log(res);
+        }
+      );
+    } catch (error) {
+      console.error("Failed to submit the data:", error);
+      setSuccess(false);
+    } finally {
+      setLoading(false);
+      setSubmitting(false);
+    }
+  };
+  const handleFormUpdate = async (values, { setSubmitting }) => {
+    try {
+      setSuccess(false);
+      setLoading(true);
+
+      await dispatch(
+        updateDepartmentThunks.editItem(
+          values.tenant,
+          values.department_id,
+          values
+        )
+      ).then((res) => {
+        setSuccess(true);
+        console.log(res);
+      });
+    } catch (error) {
+      console.error("Failed to submit the data:", error);
+      setSuccess(false);
+    } finally {
+      setLoading(false);
+      setSubmitting(false);
+    }
+  };
+
+  const buttonSx = {
+    ...(success && {
+      backgroundColor: colors.blueAccent[700],
+      "&:hover": {
+        color: colors.grey[100],
+      },
+    }),
   };
 
   return (
-    <Box
-      sx={{
-        padding: "20px",
-        display: "flex",
-        flexDirection: "column",
-        gap: "20px",
-      }}
-    >
+    <Box sx={{ padding: "20px" }}>
       <Formik
-        onSubmit={handleFormSubmit}
-        initialValues={initialValues}
+        onSubmit={handleFormUpdate}
+        initialValues={department}
         validationSchema={checkoutSchema}
       >
         {({
@@ -100,7 +204,7 @@ const Department = () => {
           <Form onSubmit={handleSubmit}>
             <Box
               backgroundColor={colors.primary[400]}
-              sx={{ padding: "20px", boxShadow: 2 }}
+              sx={{ padding: "20px", boxShadow: 2, marginBottom: "20px" }}
             >
               <Stack direction="row">
                 <Grid container spacing={3} alignItems="center">
@@ -110,7 +214,7 @@ const Department = () => {
                   <Grid item xs={12} md={9}>
                     <TextField
                       name="department_name"
-                      value={values.department_name}
+                      value={department.department_name}
                       onBlur={handleBlur}
                       onChange={handleChange}
                       id="outlined-size-small"
@@ -194,7 +298,7 @@ const Department = () => {
                       name="location"
                       variant="filled"
                       value={values.location}
-                      onChange={handleChange}
+                      // onChange={handleChange}
                       onBlur={handleBlur}
                       sx={{ width: 250, height: 35 }}
                       error={touched.location && !!errors.location}
@@ -281,6 +385,39 @@ const Department = () => {
                 </Grid>
               </Stack>
             </Box>
+            <Box
+              backgroundColor={colors.primary[400]}
+              sx={{ padding: "20px", boxShadow: 2, marginBottom: "20px" }}
+            >
+              <Grid container columnSpacing={10} rowSpacing={4}>
+                <Grid item xs={12} md={2}>
+                  Prepared By:
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <TextField
+                    id="outlined-size-small"
+                    defaultValue=""
+                    size="small"
+                    sx={{ width: 250, height: 25 }}
+                  />
+                </Grid>
+                <Grid item xs={12} md={2}>
+                  Prepared on:
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={["DatePicker"]}>
+                      <DemoItem>
+                        <DatePicker
+                          sx={{ width: 250, height: 60 }}
+                          defaultValue={dayjs("2022-04-17")}
+                        />
+                      </DemoItem>
+                    </DemoContainer>
+                  </LocalizationProvider>
+                </Grid>
+              </Grid>
+            </Box>
 
             <Box
               backgroundColor={colors.primary[400]}
@@ -344,10 +481,27 @@ const Department = () => {
                     fontSize: "14px",
                     fontWeight: "bold",
                     padding: "10px 20px",
+                    buttonSx,
+                  }}
+                  disabled={loading}
+                  startIcon={
+                    loading ? <CircularProgress size={24} /> : <SaveIcon />
+                  }
+                >
+                  {success ? "Updated" : "Update"}
+                </Button>
+                <Button
+                  type="submit"
+                  color="secondary"
+                  variant="contained"
+                  sx={{
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                    padding: "10px 20px",
                   }}
                 >
-                  <SaveIcon sx={{ mr: "10px" }} />
-                  Save
+                  <AddIcon sx={{ mr: "10px" }} />
+                  Add
                 </Button>
               </Box>
             </Box>

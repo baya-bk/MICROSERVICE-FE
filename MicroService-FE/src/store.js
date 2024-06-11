@@ -16,18 +16,32 @@ import { createThunks } from "./action/action";
 // Example for resource "address"
 const addressThunks = createThunks("getAllAddress");
 const addAddressThunks = createThunks("addAddress");
+const addDepartmentThunks = createThunks("addNewDepartment");
+const updateDepartmentThunks = createThunks("editDepartment");
+const getDepartmentThunks = createThunks("getAllDepartment");
+const getDepartmentByIdThunks = createThunks("getDepartmentById");
+
 // const addDepartmentThunks = createThunks("addDepartment");
-// const departmentThunks = createThunks("getAllDepartments");
 
 const store = configureStore({
   reducer: {
     getAllAddress: createReducer("getAllAddress"),
     addAddress: createReducer("addAddress"),
+    addNewDepartment: createReducer("addNewDepartment"),
+    editDepartment: createReducer("editDepartment"),
+    getAllDepartment: createReducer("getAllDepartment"),
+    getDepartmentById: createReducer("getDepartmentById"),
 
-    // getAllDepartments: createReducer("getAllDepartments"),
     // Add more reducers for other resources here
   },
 });
 
-export { addressThunks, addAddressThunks };
+export {
+  addressThunks,
+  addAddressThunks,
+  addDepartmentThunks,
+  updateDepartmentThunks,
+  getDepartmentThunks,
+  getDepartmentByIdThunks,
+};
 export default store;

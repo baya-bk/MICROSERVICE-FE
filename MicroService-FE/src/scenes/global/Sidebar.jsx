@@ -232,8 +232,8 @@ const MyProSidebar = () => {
             </Typography>
             {(admin || admin2) && (
               <Item
-                title="Profile Form"
-                to="form"
+                title="Employees"
+                to="employee"
                 icon={<PersonOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}

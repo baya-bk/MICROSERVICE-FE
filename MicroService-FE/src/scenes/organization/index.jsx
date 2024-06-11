@@ -78,7 +78,7 @@ const OrganizationInfo = () => {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <OrganizationStructure />
+        <OrganizationStructure setValue={setValue} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <Department />

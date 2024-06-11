@@ -16,19 +16,21 @@ import {
 import { Formik, Form } from "formik";
 import * as yup from "yup";
 import { tokens } from "../../theme";
+// import CheckIcon from "@mui/icons-material/Check";
 import SaveIcon from "@mui/icons-material/Save";
-import { useDispatch } from "react-redux";
+// import dayjs from "dayjs";
+// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+// import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+// import { useDispatch } from "react-redux";
 import AddIcon from "@mui/icons-material/Add";
-import { addAddressThunks } from "../../store";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { useState } from "react";
 
-const Address = () => {
-  const [open, setOpen] = useState(false);
+const ExternalExperience = () => {
+  const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
     setOpen(true);
@@ -41,33 +43,34 @@ const Address = () => {
 
     setOpen(false);
   };
-  const dispatch = useDispatch();
-  const handleFormSubmit = async (values, { setSubmitting }) => {
-    try {
-      setSuccess(false);
-      setLoading(true);
-
-      await dispatch(addAddressThunks.addItem(values.tenant_id, values)).then(
-        (res) => {
-          setSuccess(true);
-          console.log(res);
-        }
-      );
-    } catch (error) {
-      console.error("Failed to submit the data:", error);
-      setSuccess(false);
-    } finally {
-      setLoading(false);
-      setSubmitting(false);
-    }
+  // const dispatch = useDispatch();
+  const handleFormSubmit = async () => {
+    // try {
+    //   setSuccess(false);
+    //   setLoading(true);
+    //   await dispatch(addAddressThunks.addItem(values.tenant_id, values)).then(
+    //     (res) => {
+    //       setSuccess(true);
+    //       console.log(res);
+    //     }
+    //   );
+    // } catch (error) {
+    //   console.error("Failed to submit the data:", error);
+    //   setSuccess(false);
+    // } finally {
+    //   setLoading(false);
+    //   setSubmitting(false);
+    // }
   };
+  const handleButtonClick = () => {};
 
   const initialValues = {
     department_id: 2,
+    institution: "",
+    job_title: "",
     address: "",
-    block_number: "",
-    tel_office: "",
-    tel_extension: "",
+    responsibility: "",
+    salary: "",
     mobile: "",
     house_number: "",
     floor: "",
@@ -81,8 +84,11 @@ const Address = () => {
     /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
 
   const checkoutSchema = yup.object().shape({
+    institution: yup.string().required("Required"),
+    job_title: yup.string().required("Required"),
     address: yup.string().required("Required"),
-    tel_office: yup.string().required("Required"),
+    responsibility: yup.string().required("Required"),
+    salary: yup.string().required("Required"),
     email: yup.string().email("Invalid email"),
     mobile: yup.string().matches(phoneRegExp, "Phone number is not valid"),
   });
@@ -126,6 +132,36 @@ const Address = () => {
               <Stack direction={isSmallScreen ? "column" : "row"} gap={2}>
                 <Grid container spacing={5}>
                   <Grid item xs={12} md={2}>
+                    <Typography>Institution:*</Typography>
+                  </Grid>
+                  <Grid item xs={12} md={10}>
+                    <TextField
+                      name="institution"
+                      variant="filled"
+                      value={values.institution}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      id="outlined-size-small"
+                      size="small"
+                      sx={{ width: 250, height: 25 }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={2}>
+                    <Typography>Job Title:*</Typography>
+                  </Grid>
+                  <Grid item xs={12} md={10}>
+                    <TextField
+                      name="job_title"
+                      variant="filled"
+                      value={values.job_title}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      id="outlined-size-small"
+                      size="small"
+                      sx={{ width: 250, height: 25 }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={2}>
                     <Typography>Address:*</Typography>
                   </Grid>
                   <Grid item xs={12} md={10}>
@@ -156,45 +192,29 @@ const Address = () => {
                     </Fab>
                   </Grid>
                   <Grid item xs={12} md={2}>
-                    <Typography>Block No:</Typography>
+                    Responsibility:*
                   </Grid>
                   <Grid item xs={12} md={10}>
                     <TextField
-                      name="block_number"
-                      variant="filled"
-                      value={values.block_number}
+                      name="responsibility"
+                      value={values.responsibility}
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      id="outlined-size-small"
-                      size="small"
-                      sx={{ width: 250, height: 25 }}
+                      multiline
+                      variant="filled"
+                      rows={2}
+                      sx={{ width: 250 }}
                     />
                   </Grid>
+
                   <Grid item xs={12} md={2}>
-                    <Typography>Tel. Office:*</Typography>
+                    <Typography>Salary:*:</Typography>
                   </Grid>
                   <Grid item xs={12} md={10}>
                     <TextField
-                      value={values.tel_office}
-                      name="tel_office"
+                      name="salary"
                       variant="filled"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      id="outlined-size-small"
-                      size="small"
-                      sx={{ width: 250, height: 25 }}
-                      error={touched.tel_office && !!errors.tel_office}
-                      helperText={touched.tel_office && errors.tel_office}
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={2}>
-                    <Typography>Tel. Extension:</Typography>
-                  </Grid>
-                  <Grid item xs={12} md={10}>
-                    <TextField
-                      value={values.tel_extension}
-                      variant="filled"
-                      name="tel_extension"
+                      value={values.salary}
                       onBlur={handleBlur}
                       onChange={handleChange}
                       id="outlined-size-small"
@@ -202,26 +222,26 @@ const Address = () => {
                       sx={{ width: 250, height: 25 }}
                     />
                   </Grid>
-                  <Grid item xs={12} md={2}>
-                    <Typography>Mobile:</Typography>
-                  </Grid>
-                  <Grid item xs={12} md={10}>
-                    <TextField
-                      value={values.mobile}
-                      variant="filled"
-                      name="mobile"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      id="outlined-size-small"
-                      size="small"
-                      sx={{ width: 250, height: 25 }}
-                    />
+                  <Grid item>
+                    <Button
+                      sx={{
+                        backgroundColor: colors.blueAccent[700],
+                        color: colors.grey[100],
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                        padding: "10px 20px",
+                      }}
+                      disabled={loading}
+                      onClick={handleButtonClick}
+                    >
+                      Add
+                    </Button>
                   </Grid>
                 </Grid>
 
                 <Grid container spacing={4}>
                   <Grid item xs={12} md={2}>
-                    <Typography>House Number:</Typography>
+                    <Typography>Start_date:</Typography>
                   </Grid>
                   <Grid item xs={12} md={10}>
                     <TextField
@@ -385,4 +405,4 @@ const Address = () => {
   );
 };
 
-export default Address;
+export default ExternalExperience;

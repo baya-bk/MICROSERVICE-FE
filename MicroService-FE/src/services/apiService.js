@@ -26,7 +26,7 @@ const createApiService = () => {
     },
     create: async (tenantId, resourceName, data) => {
       try {
-        const response = await api.post(`/${resourceName}`, data);
+        const response = await api.post(`/${tenantId}/${resourceName}`, data);
 
         return response.data;
       } catch (error) {

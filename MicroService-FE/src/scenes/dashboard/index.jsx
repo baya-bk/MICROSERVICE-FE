@@ -8,12 +8,13 @@ import EditItemForm from "../team";
 import Invoices from "../invoices";
 import Contacts from "../contacts";
 import Bar from "../bar";
-import AddItemForm from "../form";
+// import AddItemForm from "../employees";
 import AddNewUser from "../team/AddNewUser";
 import Pie from "../pie";
 import FAQ from "../faq";
 import Calendar from "../calendar/calendar";
 import OrganizationInfo from "../organization";
+import EmpoloyeeInfo from "../employees";
 import Pay from "../pay";
 import Job from "../job";
 import { MyProSidebarProvider } from "../global/sideBarContext";
@@ -34,7 +35,7 @@ const Dashboard = () => {
                 <Route path="/team/add" element={<AddNewUser />} />
                 <Route path="/contacts" element={<Contacts />} />
                 <Route path="/invoices" element={<Invoices />} />
-                <Route path="/form" element={<AddItemForm />} />
+                <Route path="/employee" element={<EmpoloyeeInfo />} />
                 <Route path="/bar" element={<Bar />} />
                 <Route path="/pie" element={<Pie />} />
                 <Route path="/faq" element={<FAQ />} />

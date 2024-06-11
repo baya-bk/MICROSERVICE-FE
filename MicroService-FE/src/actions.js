@@ -18,7 +18,7 @@ export const fetchItemsFailure = (error) => ({
 });
 
 export const fetchItemsAction = () => {
-  const tenant_id = 53;
+  const tenant_id = 2;
   return async (dispatch) => {
     try {
       // const response = await api.get(`/53/getAllAddress`);

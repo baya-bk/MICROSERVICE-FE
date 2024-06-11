@@ -8,11 +8,10 @@ import { tokens } from "../../theme";
 import Header from "../../components/Header";
 // import { useMockData } from "../MockDataContext";
 // import { fetchItemsAction } from "../../actions";
-import { deleteItemAction } from "../../actions";
+// import { deleteItemAction } from "../../actions";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
 import { addressThunks } from "../../store";
 
 const Team = () => {
@@ -26,19 +25,19 @@ const Team = () => {
   const ite = addressItems.map((item) => {
     return { ...item, id: item.address_id };
   });
-  console.log("Items :: ", ite);
+  // console.log("Items :: ", ite);
 
   // useEffect(() => {
   //   dispatch(fetchItemsAction());
   // }, [dispatch]);
 
   useEffect(() => {
-    const tenantId = 53;
+    const tenantId = 2;
     dispatch(addressThunks.fetchItems(tenantId));
   }, [dispatch]);
 
   const handleDelete = (id) => {
-    dispatch(deleteItemAction(id));
+    // dispatch(deleteItemAction(id));
   };
 
   const columns = [
