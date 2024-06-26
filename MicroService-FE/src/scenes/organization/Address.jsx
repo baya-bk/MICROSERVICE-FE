@@ -124,7 +124,7 @@ const Address = () => {
               sx={{ padding: "30px", boxShadow: 2, marginBottom: "20px" }}
             >
               <Stack direction={isSmallScreen ? "column" : "row"} gap={2}>
-                <Grid container spacing={5}>
+                <Grid container spacing={3}>
                   <Grid item xs={12} md={2}>
                     <Typography>Address:*</Typography>
                   </Grid>
@@ -219,7 +219,7 @@ const Address = () => {
                   </Grid>
                 </Grid>
 
-                <Grid container spacing={4}>
+                <Grid container spacing={3}>
                   <Grid item xs={12} md={2}>
                     <Typography>House Number:</Typography>
                   </Grid>
@@ -236,7 +236,7 @@ const Address = () => {
                     />
                   </Grid>
                   <Grid item xs={12} md={2}>
-                    <Typography>Floor:</Typography>
+                    <Typography>Floor: </Typography>
                   </Grid>
                   <Grid item xs={12} md={10}>
                     <TextField

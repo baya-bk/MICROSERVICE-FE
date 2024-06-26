@@ -1,25 +1,3 @@
-// import {
-//   FETCH_ITEMS_SUCCESS,
-//   FETCH_ITEMS_FAILURE,
-//   EDIT_ITEM_SUCCESS,
-//   EDIT_ITEM_FAILURE,
-//   DELETE_ITEM_SUCCESS,
-//   DELETE_ITEM_FAILURE,
-//   ADD_ITEM_SUCCESS,
-//   ADD_ITEM_FAILURE,
-// } from "./action.js";
-
-// import {
-//   ADD_FAILURE,
-//   ADD_SUCCESS,
-//   DELETE_FAILURE,
-//   DELETE_SUCCESS,
-//   EDIT_FAILURE,
-//   EDIT_SUCCESS,
-//   FETCH_FAILURE,
-//   FETCH_SUCCESS,
-// } from "./action.js";
-
 const initialState = {
   items: [],
   error: null,

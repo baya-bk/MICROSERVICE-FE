@@ -176,7 +176,7 @@ const StructureChange = () => {
               sx={{ padding: "30px", boxShadow: 2, marginBottom: "20px" }}
             >
               <Stack direction={isSmallScreen ? "column" : "row"} gap={2}>
-                <Grid container spacing={4}>
+                <Grid container spacing={3}>
                   <Grid item xs={12} md={3}>
                     <Typography>Department Name:*</Typography>
                   </Grid>
@@ -244,7 +244,7 @@ const StructureChange = () => {
                     )}
                   </Grid>
                 </Grid>
-                <Grid container spacing={2} alignItems="center">
+                <Grid container spacing={3} alignItems="center">
                   <Grid item xs={12} md={3}>
                     <Typography>New Work Unit:*</Typography>
                   </Grid>

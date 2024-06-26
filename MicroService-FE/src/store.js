@@ -1,14 +1,3 @@
-// import { configureStore } from "@reduxjs/toolkit";
-// import itemsReducer from "./reducers";
-
-// const store = configureStore({
-//   reducer: {
-//     items: itemsReducer,
-//   },
-// });
-
-// export default store;
-
 import { configureStore } from "@reduxjs/toolkit";
 import createReducer from "./action/reducers";
 import { createThunks } from "./action/action";
@@ -20,9 +9,7 @@ const addDepartmentThunks = createThunks("addNewDepartment");
 const updateDepartmentThunks = createThunks("editDepartment");
 const getDepartmentThunks = createThunks("getAllDepartment");
 const getDepartmentByIdThunks = createThunks("getDepartmentById");
-
-// const addDepartmentThunks = createThunks("addDepartment");
-
+const addPersonalInfoThunks = createThunks("addPersonalInfo");
 const store = configureStore({
   reducer: {
     getAllAddress: createReducer("getAllAddress"),
@@ -31,7 +18,7 @@ const store = configureStore({
     editDepartment: createReducer("editDepartment"),
     getAllDepartment: createReducer("getAllDepartment"),
     getDepartmentById: createReducer("getDepartmentById"),
-
+    addPersonalInfo: createReducer("addPersonalInfo"),
     // Add more reducers for other resources here
   },
 });
@@ -43,5 +30,6 @@ export {
   updateDepartmentThunks,
   getDepartmentThunks,
   getDepartmentByIdThunks,
+  addPersonalInfoThunks,
 };
 export default store;

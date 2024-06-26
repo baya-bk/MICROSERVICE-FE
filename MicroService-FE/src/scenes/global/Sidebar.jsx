@@ -206,8 +206,8 @@ const MyProSidebar = () => {
             )}
             {admin && (
               <Item
-                title="Employees Information"
-                to="contacts"
+                title="Employee's Personal Record"
+                to="record"
                 icon={<ContactsOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}

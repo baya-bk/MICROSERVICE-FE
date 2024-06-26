@@ -178,7 +178,7 @@ const StaffPlan = () => {
                     />
                   </Grid>
                 </Grid>
-                <Grid container spacing={3} alignItems="center">
+                <Grid container spacing={5} alignItems="center">
                   <Grid item xs={12} md={3}>
                     Job Code:
                   </Grid>

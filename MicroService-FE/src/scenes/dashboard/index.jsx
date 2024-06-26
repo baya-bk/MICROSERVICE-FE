@@ -17,6 +17,8 @@ import OrganizationInfo from "../organization";
 import EmpoloyeeInfo from "../employees";
 import Pay from "../pay";
 import Job from "../job";
+import EmployeeRecord from "../record";
+import ContractRenewal from "../contract";
 import { MyProSidebarProvider } from "../global/sideBarContext";
 const Dashboard = () => {
   const theme = useTheme();
@@ -34,6 +36,8 @@ const Dashboard = () => {
                 <Route path="/team/edit/:id" element={<EditItemForm />} />
                 <Route path="/team/add" element={<AddNewUser />} />
                 <Route path="/contacts" element={<Contacts />} />
+                <Route path="/record" element={<EmployeeRecord />} />
+                <Route path="/contract" element={<ContractRenewal />} />
                 <Route path="/invoices" element={<Invoices />} />
                 <Route path="/employee" element={<EmpoloyeeInfo />} />
                 <Route path="/bar" element={<Bar />} />
